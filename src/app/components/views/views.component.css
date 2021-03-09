@@ -424,7 +424,11 @@ img {
 }
 
 .callname {
-    margin-left: 250px;
+    margin-left: 190px;
+}
+
+.callTime {
+    margin-left: 260px;
 }
 
 .media div {
@@ -551,7 +555,7 @@ img {
 }
 
 .entrante {
-    margin: auto;
+    margin-left: 260px;
     border: none;
     display: flex;
     background: #69b2e2;
