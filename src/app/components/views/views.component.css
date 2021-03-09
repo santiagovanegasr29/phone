@@ -1,0 +1,580 @@
+.label {
+    display: inline-block;
+    width: 70px;
+    animation-name: desaparecer;
+    animation-duration: 1s;
+    animation-fill-mode: forwards;
+}
+
+.form-control {
+    text-align: center;
+}
+
+.numberphone {
+    font-size: 20px;
+    margin: auto;
+}
+
+.number {
+    color: green;
+    width: 50px;
+    height: 50px;
+    border-radius: 50px;
+    margin-left: 60px;
+    font-size: 48px;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.hangUpCall {
+    transform: rotate(135deg);
+    color: red;
+    width: 50px;
+    height: 50px;
+    border-radius: 50px;
+    margin-left: 60px;
+    font-size: 48px;
+    cursor: pointer;
+}
+
+.hangUpCall:hover {
+    cursor: pointer;
+    color: black;
+    font-size: 60px;
+}
+
+.boton-inicio {
+    width: 100px;
+    height: 25px;
+    display: block;
+    margin: 5% auto;
+    border: 2px solid #888888;
+    background: #222222;
+}
+
+.logo {
+    border-radius: 10px;
+    font: oblique bold 400% cursive;
+    padding-left: 60px;
+}
+
+.logoP {
+    font: oblique bold 400% cursive;
+    display: flex;
+}
+
+.contacts {
+    margin: auto;
+    border: 2px solid #69b2e2;
+    border-radius: 7px;
+    display: flex;
+    flex-direction: column;
+}
+
+.entrante1 {
+    font-size: 48px;
+    color: green;
+}
+
+.numberPhones {
+    opacity: 10;
+    animation-name: aparecer;
+    animation-duration: 4s;
+    animation-fill-mode: forwards;
+    cursor: pointer;
+    font-size: 50px;
+    margin-left: 205px;
+    margin-top: 40px;
+}
+
+.label {
+    display: inline-block;
+    width: 80px;
+}
+
+.form-control {
+    text-align: center;
+}
+
+.text-left {
+    margin: 40px;
+}
+
+* {
+    margin: auto;
+    padding: auto;
+    box-sizing: border-box;
+}
+
+.delete {
+    cursor: pointer;
+    color: red;
+    border: transparent;
+    font-size: 50px;
+    margin-left: 50px;
+}
+
+.delete:hover {
+    cursor: pointer;
+    color: rgb(0, 0, 0);
+    font-size: 60px;
+}
+
+.call {
+    cursor: pointer;
+    font-size: 50px;
+    color: green
+}
+
+.number:hover {
+    cursor: pointer;
+    color: rgb(1, 1, 4);
+    font-size: 60px;
+}
+
+img {
+    max-width: 100%;
+}
+
+.inbox_people {
+    background: #f8f8f8 none repeat scroll 0 0;
+    float: left;
+    overflow: hidden;
+    width: 25%;
+    border-right: 1px solid #c4c4c4;
+}
+
+.top_spac {
+    margin: 20px 0 0;
+}
+
+.recent_heading {
+    float: left;
+    width: 40%;
+}
+
+.headind_srch {
+    padding: 10px 29px 10px 20px;
+    overflow: hidden;
+    border-bottom: 1px solid #c4c4c4;
+}
+
+.recent_heading h4 {
+    color: #05728f;
+    font-size: 21px;
+    margin: auto;
+}
+
+.srch_bar input {
+    border: 1px solid #cdcdcd;
+    border-width: 0 0 1px 0;
+    width: 80%;
+    padding: 2px 0 4px 6px;
+    background: none;
+    margin: auto;
+}
+
+.srch_bar .input-group-addon button {
+    background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
+    border: medium none;
+    padding: 0;
+    color: #707070;
+    font-size: 18px;
+}
+
+.srch_bar .input-group-addon {
+    margin: 0 0 0 -27px;
+}
+
+.chat_ib h5 {
+    font-size: 15px;
+    color: #464646;
+    margin: 0 0 8px 0;
+}
+
+.chat_ib h5 span {
+    font-size: 13px;
+    float: right;
+}
+
+.chat_ib p {
+    font-size: 14px;
+    color: #989898;
+    margin: auto
+}
+
+.chat_img {
+    float: left;
+    width: 11%;
+}
+
+.chat_ib {
+    float: left;
+    padding: 0 0 0 15px;
+    width: 90%;
+}
+
+.chat_people {
+    overflow: hidden;
+    clear: both;
+}
+
+.chat_list {
+    border-bottom: 1px solid #c4c4c4;
+    margin: 0;
+    padding: 18px 16px 10px;
+}
+
+.inbox_chat {
+    height: auto;
+    overflow: scroll;
+    border-radius: 1px;
+}
+
+.active_chat {
+    background: #ebebeb;
+}
+
+.incoming_msg_img {
+    display: inline-block;
+    width: 6%;
+}
+
+.received_msg {
+    display: inline-block;
+    padding: 0 0 0 10px;
+    vertical-align: top;
+    width: 92%;
+}
+
+.received_withd_msg p {
+    background: #ebebeb none repeat scroll 0 0;
+    border-radius: 3px;
+    color: #646464;
+    font-size: 14px;
+    margin: 0;
+    padding: 5px 10px 5px 12px;
+    width: 100%;
+}
+
+.time_date {
+    color: #747474;
+    display: block;
+    font-size: 12px;
+    margin: 8px 0 0;
+}
+
+.mesgs {
+    float: left;
+}
+
+.load {
+    margin: 350px;
+    margin-left: 700px;
+    width: 60px;
+    height: 60px;
+}
+
+.sent_msg p {
+    background: #69b2e2 none repeat scroll 0 0;
+    border-radius: 2px;
+    font-size: 14px;
+    margin: 0;
+    color: rgb(29, 9, 9);
+    padding: 5px 10px 5px 12px;
+    width: 100%;
+}
+
+.outgoing_msg {
+    overflow: hidden;
+    margin: 26px 0 26px;
+}
+
+.sent_msg {
+    float: right;
+    width: 46%;
+}
+
+.input_msg_write input {
+    background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
+    border: medium none;
+    color: #4c4c4c;
+    font-size: 15px;
+    min-height: 48px;
+    width: 100%;
+}
+
+.type_msg {
+    border-top: 1px solid #c4c4c4;
+    position: relative;
+    width: 1390px;
+}
+
+.msg_send_btn {
+    background: #010380 none repeat scroll 0 0;
+    border: medium none;
+    border-radius: 50%;
+    color: #fff;
+    cursor: pointer;
+    font-size: 17px;
+    height: 33px;
+    position: absolute;
+    right: 0;
+    top: 11px;
+    width: 33px;
+}
+
+.write_msg {
+    width: 50px;
+}
+
+.msg_history {
+    height: 800px;
+    width: 1400px;
+    overflow-y: auto;
+    overflow-x: auto;
+}
+
+.btnlogin {
+    font-size: 40px;
+    display: block;
+    margin: auto;
+    transition: 2.99s all;
+    opacity: 10;
+    animation-name: aparecer;
+    animation-duration: 4s;
+    animation-fill-mode: forwards;
+    cursor: pointer;
+}
+
+.container {
+    max-width: 2000px;
+}
+
+.login {
+    display: flex;
+    cursor: pointer;
+    color: red;
+    font-size: 40px;
+}
+
+.avatar {
+    display: block;
+}
+
+.chat {
+    color: #0b00d3;
+    width: 50px;
+    height: 50px;
+    border-radius: 50px;
+    margin-left: 60px;
+    font-size: 48px;
+    display: flex;
+    margin-left: 220px;
+}
+
+.black {
+    color: black;
+    font-size: 22px;
+}
+
+.blue {
+    color: rgb(255, 145, 0);
+    font-size: 20px;
+}
+
+.btn {
+    border: .5px solid transparent;
+}
+
+.contactAdd:hover {
+    cursor: pointer;
+    color: #ff1717;
+}
+
+.text {
+    color: black;
+}
+
+.edit {
+    margin-left: 50px;
+    font-size: 50px;
+    color: black;
+}
+
+.edit:hover {
+    color: #1717FF;
+    cursor: pointer;
+    font-size: 60px;
+}
+
+.calling {
+    border-radius: 2px;
+    display: flex;
+}
+
+.media {
+    height: auto;
+    width: auto;
+    margin-top: 5px;
+    border: 5px solid;
+    border-radius: 20px;
+    color: #a2d7fa;
+    background-clip: padding-box;
+}
+
+.callname {
+    margin-left: 250px;
+}
+
+.media div {
+    color: black;
+}
+
+.close {
+    position: absolute;
+    bottom: 2em;
+    right: 2em;
+    cursor: pointer;
+}
+
+.avatarP {
+    border-radius: 300px;
+    transform: scale(1);
+}
+
+.avatar {
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(0.95);
+        box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.7);
+    }
+    70% {
+        transform: scale(1);
+        box-shadow: 0 0 0 10px rgba(0, 0, 0, 0);
+    }
+    100% {
+        transform: scale(0.95);
+        box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+    }
+}
+
+.participant {
+    margin-top: 10px;
+}
+
+.inside {
+    width: 100%;
+}
+
+#padding_box {
+    background-clip: padding-box;
+}
+
+.mesgs {
+    width: 70;
+}
+
+.contactNumber {
+    width: 900px;
+    font-size: 15px;
+}
+
+.avatar2 {
+    padding: 20px;
+}
+
+.medias {
+    margin-left: 10px;
+}
+
+.contact-scrollbar-css {
+    height: 580px;
+}
+
+.contact-scrollbar-css {
+    overflow-y: scroll;
+}
+
+.contact-scrollbar-css::-webkit-scrollbar {
+    width: 5px;
+}
+
+.contact-scrollbar-css::-webkit-scrollbar-track {
+    background: #eee;
+}
+
+.contact-scrollbar-css::-webkit-scrollbar-thumb {
+    border-radius: 1rem;
+    background-color: #0f016f;
+    background-image: linear-gradient(to top, #001172 0%, #100176 100%);
+}
+
+.message-scrollbar-css {
+    height: 750px;
+}
+
+.message-scrollbar-css {
+    overflow-y: scroll;
+}
+
+.message-scrollbar-css::-webkit-scrollbar {
+    width: 5px;
+}
+
+.message-scrollbar-css::-webkit-scrollbar-track {
+    background: #eee;
+}
+
+.message-scrollbar-css::-webkit-scrollbar-thumb {
+    border-radius: 1rem;
+    background-color: #008f29;
+    background-image: linear-gradient(to top, #00ac00 0%, #01761e 100%);
+}
+
+.llamada {
+    background-color: #69b2e2;
+    border-radius: 30px;
+}
+
+.microphone {
+    font-size: 45px;
+}
+
+.microphone:hover {
+    color: black;
+    cursor: pointer;
+}
+
+.entrante {
+    margin: auto;
+    border: none;
+    display: flex;
+    background: #69b2e2;
+}
+
+.copyNumber {
+    margin: auto;
+    border: none;
+    display: flex;
+}
+
+.options {
+    display: flex;
+    border-radius: 220px;
+    background-color: blue;
+    background-clip: padding-box;
+}
+
+.bell {
+    font-size: 30px;
+    color: rgb(255, 145, 0);
+}
+
+.bell:hover {
+    cursor: pointer;
+    color: #ff1717;
+}

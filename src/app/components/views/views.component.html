@@ -1,0 +1,335 @@
+<div class="container md-12" id="padding_box">
+    <div *ngIf="login">
+        <img class="logo" src="assets/img/logo-simbolo.png">
+        <label class="logo">Softphone</label>
+
+        <form class="text-left" (ngSubmit)="sipRegister()" ngNativeValidate>
+            <br>
+            <label class="label">User : </label>
+            <input id="impi" name="impi" type="impi" class="form-control" [(ngModel)]="dataform.impi" value="" required placeholder="2250">
+            <br>
+            <label class="label">Domain : </label>
+            <input id="impu" name="impu" type="impu" class="form-control" [(ngModel)]="dataform.impu" value="" required placeholder="voip.uxomnitech.com">
+            <br>
+            <label class="label">Password : </label>
+            <input id="password" name="password" type="password" class="form-control" [(ngModel)]="dataform.password" value="" required placeholder="***********">
+            <br>
+            <label class="label">Display name : </label>
+            <input id="display_name" name="display_name" type="display_name" class="form-control" [(ngModel)]="dataform.display_name" value="" required placeholder="santiago">
+            <br>
+            <label class="label">Websocket proxy url : </label>
+            <input id="websocket_proxy_url" name="websocket_proxy_url" type="websocket_proxy_url" class="form-control" [(ngModel)]="dataform.websocket_proxy_url" value="" required placeholder="wss://voip.uxomnitech.com:8089/ws">
+            <br>
+            <button type="submit" class="btnlogin btn btn-lg btn-primary btn-outline-dark col-3">Login</button>
+        </form>
+    </div>
+    <div class="contacts md-10">
+        <!--*ngIf="logout"-->
+        <div class="UserContact">
+            <ng-template #contentUser let-modal>
+                <div class="modal-header">
+                    <h4 class="modal-title" id="modal-basic-title">Enter Your Information</h4>
+                    <button type="button" class="close" aria-label="Close" data-dismiss="modal" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+          </button>
+                </div>
+                <div class="modal-body">
+                    <form class="text-left" (ngSubmit)="postContacts();getContacts();modal.dismiss('Cross click')" ngNativeValidate>
+                        <br>
+                        <label class="label">User : </label>
+                        <input id="name" name="name" class="form-control" [(ngModel)]="formContact.name" required placeholder="Name User">
+                        <br>
+                        <label class="label">Number Phone : </label>
+                        <input id="numberPhone" name="numberPhone" type="number" class="form-control" [(ngModel)]="formContact.numberPhone" required placeholder="Number Phone">
+                        <br>
+                        <button type="submit" class="btn btn-primary">Add User</button>
+                        <br>
+                    </form>
+                </div>
+            </ng-template>
+        </div>
+
+        <div class="messaging  md-10">
+            <div class="inbox_msg">
+                <div class="inbox_people">
+                    <div class="headind_srch  md-7">
+                        <i *ngIf="logout" class="login fa fa-sign-out" (click)='sipUnRegister();'></i>
+                        <div class="recent_heading">
+
+                            <div class="logoP">
+                                <img src="assets/img/logo-simbolo.png"><label>Softphone</label>
+                            </div>
+                            <div class="bg-gray px-6 py-2 bg-light">
+                                <i class="contactAdd fa fa-user-plus" (click)='openUser(contentUser)'></i>
+
+                            </div>
+                        </div>
+                        <br><br>
+                        <div class="srch_bar">
+                            <div class="stylish-input-group">
+
+                            </div>
+                            <i class="numberPhones fa fa-th md-6" [@numbersAnimation]="isOpen ? 'open' : 'closed'" (click)='toggle();'></i>
+                            <input for="number" id="numberphone" name="number" type="tel" class="numberphone form-control" placeholder="Phone" [(ngModel)]="numberPhone.phone">
+                            <br>
+                            <i class="number fa fa-phone" id="sipCall2" (click)="loadingCall();sipCall('call-audio')"></i>
+                            <i class="hangUpCall fa fa-phone" (click)="sipHangUp()"></i>
+                            <div class="dos" [@animation1]="isOpen ? 'open' : 'closed'">
+                                <br>
+                                <button class="btn btn-lg btn-outline-secondary col-sm-4 p-1" type="button" (click)="pressNum('1')">1</button>
+                                <button class="btn btn-lg btn-outline-secondary col-sm-4 p-1" type="button" (click)="pressNum('2')">2</button>
+                                <button class="btn btn-lg btn-outline-secondary col-sm-4 p-1" type="button" (click)="pressNum('3')">3</button>
+                                <br>
+                                <button class="btn btn-lg btn-outline-secondary col-sm-4 p-1" type="button" (click)="pressNum('4')">4</button>
+                                <button class="btn btn-lg btn-outline-secondary col-sm-4 p-1" type="button" (click)="pressNum('5')">5</button>
+                                <button class="btn btn-lg btn-outline-secondary col-sm-4 p-1" type="button" (click)="pressNum('6')">6</button>
+                                <br>
+                                <button class="btn btn-lg btn-outline-secondary col-sm-4 p-1" type="button" (click)="pressNum('7')">7</button>
+                                <button class="btn btn-lg btn-outline-secondary col-sm-4 p-1" type="button" (click)="pressNum('8')">8</button>
+                                <button class="btn btn-lg btn-outline-secondary col-sm-4 p-1" type="button" (click)="pressNum('9')">9</button>
+                                <br>
+                                <button class="btn btn-lg btn-outline-secondary col-sm-4 p-1" type="button" (click)="pressNum('*')">*</button>
+                                <button class="btn btn-lg btn-outline-secondary col-sm-4 p-1" type="button" (click)="pressNum('0')">0</button>
+                                <button class="btn btn-lg btn-outline-secondary col-sm-4 p-1" type="button" (click)="pressNum('#')">#</button>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="contact-scrollbar-css">
+                        <nav>
+                            <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                                <button (click)="listContact()" [ngClass]="{'black' : this.listContacts, 'blue': !this.listContacts}" class="nav-link  fa fa-user" data-bs-toggle="tab" type="button" role="tab">Contact</button>
+                                <button (click)="historyCall()" [ngClass]="{'black' : this.historyCalls,'blue': !this.historyCalls}" class="nav-link fa fa-clock-o" data-bs-toggle="tab" type="button" role="tab">Recent</button>
+                            </div>
+                        </nav>
+                        <div *ngIf="listContacts" class="media-body ml-6 md-6" id="padding_box">
+                            <div class="media" *ngFor="let contact of conta"><img src="https://www.w3schools.com/w3css/img_avatar2.png" alt="user" width="40" class="rounded-circle">
+
+                                <div class="contactNumber">
+                                    <h6 class="mb-3">Name: {{contact.name}} </h6>
+                                    <p class="font-italic md-3 text-small">Number: {{contact.numberP}}</p>
+                                </div>
+                                <i class="number fa fa-phone" id="sipCall2" (click)="contactCall(contact.numberP);loadingCall();"></i>
+                                <i class="delete md-6 fa fa-trash fa-2x" (click)='deleteContact(contact.id);getContacts()'></i>
+                                <i class="edit fa fa-edit fa-2x" (click)='openUser(contentEditUser);getContacts()'></i>
+                                <ng-template #contentEditUser let-modal>
+                                    <div class="modal-header">
+                                        <h4 class="modal-title" id="modal-basic-title">Enter Your Information</h4>
+                                        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <br>
+                                        <form class="text-left" (ngSubmit)="updateContact(contact.id,contact.name,contact.numberP);getContacts();modal.dismiss('Cross click')" ngNativeValidate>
+                                            <label class="label">User : </label>
+                                            <input id="name" name="name" class="form-control" [(ngModel)]="contact.name" required>
+                                            <br>
+                                            <label class="label">Number Phone : </label>
+                                            <input id="numberPhone" name="numberPhone" type="number" class="form-control" [(ngModel)]="contact.numberP" required>
+                                            <br>
+                                            <button type="submit" class="btn btn-primary">Edit User</button>
+                                        </form>
+                                    </div>
+                                </ng-template>
+                            </div>
+                        </div>
+                        <div *ngIf="historyCalls" class="media-body md-6">
+                            <div class="media" *ngFor="let call of calls.reverse();"><img src="https://www.w3schools.com/w3css/img_avatar2.png" alt="user" width="40" class="rounded-circle">
+                                <h6 class="text medias">Number: {{call.call}}</h6>
+                                <div class="medias">
+                                    <p class="text font-italic  text-small">Fecha: {{call.date}}</p>
+                                    <p class="text font-italic  text-small">Hora: {{call.time}}</p>
+                                </div>
+                                <div class="medias">
+                                    <p class="text font-italic  text-small">{{call.tipo}}</p>
+                                    <p class="text font-italic  text-small">{{call.status}}</p>
+                                </div>
+                                <p class="medias text font-italic  text-small">
+                                    call duration: {{call.callTime}}</p>
+                                <i class="delete fa fa-trash fa-2x" (click)='deleteHistoryCalls(call.id);getHistoryCalls()'></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="mesgs">
+                    <svg class="load" *ngIf="loading" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50">
+                        <path fill="#051DF5" d="M25,5A20.14,20.14,0,0,1,45,22.88a2.51,2.51,0,0,0,2.49,2.26h0A2.52,2.52,0,0,0,50,22.33a25.14,25.14,0,0,0-50,0,2.52,2.52,0,0,0,2.5,2.81h0A2.51,2.51,0,0,0,5,22.88,20.14,20.14,0,0,1,25,5Z">
+                          <animateTransform attributeName="transform" type="rotate" from="0 25 25" to="360 25 25" dur="0.5s" repeatCount="indefinite"/>
+                        </path>
+                      </svg>
+
+
+                    <div class="msg_history llamada md-8">
+                        <!--*ngIf="calling"-->
+                        <div class="col-md-6">
+                            <div class="inside">
+                                <div class="panel">
+                                    <div class="participant">
+                                        <img id="avatar" class="avatar avatarP" src="https://www.w3schools.com/w3css/img_avatar3.png" alt="avatar">
+                                        <br>
+                                        <label class="callname">{{callName}} </label>
+                                        <br>
+                                        <input class="entrante" type="text" value="{{incomingcall}} " name="" id="entrante" disabled>
+                                        <br>
+                                        <label class="callname">{{callTime}}</label>
+                                        <br>
+                                        <button class="copyNumber btn-dark btn-outline-warning fa fa-copy" (click)="copy()"> Copy Number</button>
+                                    </div>
+                                    <br>
+                                    <div class="options">
+                                        <button class="microphone btn option"><i [@muteAnimation]="numberShow ? 'open' : 'close'" class="fa fa-microphone md-20" (click)="sipToggleMute();showNumbers();"></i></button>
+                                        <i class="number fa fa-phone md-30" (click)="sipCall('call-audio')"></i>
+                                        <i class="hangUpCall  fa fa-phone md-30" (click)="sipHangUp()"></i>
+                                        <input type="button" class="btn btn-success" id="btnTransfer" value="Transfer" (click)="sipTransfer()" />
+                                        <button *ngIf="slash" class="bell btn option"><i class="fa fa-bell-slash" (click)="callSound();callSlash();"></i></button>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div *ngIf="text">
+                        <div class="msg_history md-3">
+                            <div class="incoming_msg">
+                                <br>
+                                <div class="incoming_msg_img"> <img src="https://www.w3schools.com/w3css/img_avatar1.png" alt="sunil">
+                                </div>
+                                <div class="received_msg md-2">
+
+                                    <div class="received_withd_msg md-2">
+                                        <p>Lorem ipsum dolor sit am
+                                        </p>
+                                        <span class="time_date"> 11:01 AM | June 9</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="outgoing_msg md-6">
+                                <div class="sent_msg md-5">
+                                    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Sequi aut iusto nulla, consequatur, quam magni iure reiciendis error, eos eum quo! Alias natus rem omnis molestias odit commodi impedit sapiente?
+                                    </p>
+                                    <span class="time_date"> 11:01 AM | June 9</span>
+                                </div>
+                            </div>
+                            <div class="incoming_msg">
+                                <div class="incoming_msg_img"> <img src="https://www.w3schools.com/w3css/img_avatar1.png" alt="sunil">
+                                </div>
+                                <div class="received_msg">
+                                    <div class="received_withd_msg">
+                                        <p>Lorem ipsum dolor sit am
+                                        </p>
+                                        <span class="time_date"> 11:01 AM | June 9</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="outgoing_msg">
+                                <div class="sent_msg">
+                                    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Sequi aut iusto nulla, consequatur, quam magni iure reiciendis error, eos eum quo! Alias natus rem omnis molestias odit commodi impedit sapiente?
+                                    </p>
+                                    <span class="time_date"> 11:01 AM | June 9</span>
+                                </div>
+                            </div>
+                            <div class="incoming_msg">
+                                <div class="incoming_msg_img"> <img src="https://www.w3schools.com/w3css/img_avatar1.png" alt="sunil">
+                                </div>
+                                <div class="received_msg">
+                                    <div class="received_withd_msg">
+                                        <p>Lorem ipsum dolor sit am
+                                        </p>
+                                        <span class="time_date"> 11:01 AM | June 9</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="outgoing_msg">
+                                <div class="sent_msg">
+                                    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Sequi aut iusto nulla, consequatur, quam magni iure reiciendis error, eos eum quo! Alias natus rem omnis molestias odit commodi impedit sapiente?
+                                    </p>
+                                    <span class="time_date"> 11:01 AM | June 9</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="type_msg">
+                            <div class="input_msg_write">
+                                <input type="text" class="write_msg" placeholder="Type a message" />
+                                <button class="msg_send_btn" type="button"><i class="fa fa-paper-plane-o" aria-hidden="true"></i></button>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+</div>
+<audio id="audio_remote" autoplay="autoplay"></audio>
+<audio id="ringtone" loop src="../../../assets/js/sounds/ringing.mp3"></audio>
+<audio id="ringbacktone" loop src="../../../assets/js/sounds/calling.mp3"> </audio>
+
+
+
+
+<!--
+
+<section class="contenedor-celular " *ngIf="logout ">
+
+    <div class="caja-superior ">
+        <svg class="icon " width="24 " height="24 " xmlns="http://www.w3.org/2000/svg " fill-rule="evenodd " clip-rule="evenodd ">
+      <path
+        d="M16 22.621l-3.521-6.795c-.007.004-1.974.97-2.064 1.011-2.24 1.086-6.799-7.82-4.609-8.994l2.082-1.026-3.492-6.817-2.106 1.039c-1.639.855-2.313 2.666-2.289 4.916.075 6.948 6.809 18.071 12.309 18.045.541-.003 1.07-.113 1.58-.346.121-.055 2.102-1.029
+        2.11-1.033zm-2.5-13.621c.828 0 1.5.672 1.5 1.5s-.672 1.5-1.5 1.5-1.5-.672-1.5-1.5.672-1.5 1.5-1.5zm9 0c.828 0 1.5.672 1.5 1.5s-.672 1.5-1.5 1.5-1.5-.672-1.5-1.5.672-1.5 1.5-1.5zm-4.5 0c.828 0 1.5.672 1.5 1.5s-.672 1.5-1.5 1.5-1.5-.672-1.5-1.5.672-1.5
+        1.5-1.5z " />
+    </svg>
+    </div>
+    <div class="pantalla ">
+        <div>
+            <div class="footer ">
+            </div>
+            <p *ngIf="logout " class="conected " name="conected " id="conected ">conected</p>
+            <input *ngIf="logout " type="button " class="login btn-danger " id="btnUnRegister " value="LogOut " (click)='sipUnRegister();' />
+            <div>
+
+
+            </div>
+
+            <br>
+            <input for="number " id="numberphone " name="number " type="tel " class="form-control " placeholder="Phone " [(ngModel)]="numberPhone.phone ">
+            <br>
+
+
+
+            <button class="btn btn-lg btn-outline-secondary col-sm-4 p-1 " type="button " (click)="pressNum( '1') ">1</button>
+            <button class="btn btn-lg btn-outline-secondary col-sm-4 p-1 " type="button " (click)="pressNum( '2') ">2</button>
+            <button class="btn btn-lg btn-outline-secondary col-sm-4 p-1 " type="button " (click)="pressNum( '3') ">3</button>
+            <br>
+            <button class="btn btn-lg btn-outline-secondary col-sm-4 p-1 " type="button " (click)="pressNum( '4') ">4</button>
+            <button class="btn btn-lg btn-outline-secondary col-sm-4 p-1 " type="button " (click)="pressNum( '5') ">5</button>
+            <button class="btn btn-lg btn-outline-secondary col-sm-4 p-1 " type="button " (click)="pressNum( '6') ">6</button>
+            <br>
+            <button class="btn btn-lg btn-outline-secondary col-sm-4 p-1 " type="button " (click)="pressNum( '7') ">7</button>
+            <button class="btn btn-lg btn-outline-secondary col-sm-4 p-1 " type="button " (click)="pressNum( '8') ">8</button>
+            <button class="btn btn-lg btn-outline-secondary col-sm-4 p-1 " type="button " (click)="pressNum( '9') ">9</button>
+            <br>
+            <button class="btn btn-lg btn-outline-secondary col-sm-4 p-1 " type="button " (click)="pressNum( '*') ">*</button>
+            <button class="btn btn-lg btn-outline-secondary col-sm-4 p-1 " type="button " (click)="pressNum( '0') ">0</button>
+            <button class="btn btn-lg btn-outline-secondary col-sm-4 p-1 " type="button " (click)="pressNum( '#') ">#</button>
+        </div>
+        <br>
+        <i class="number fa fa-phone " style="font-size:48px;color:green " id="sipCall2 " (click)="sipCall( 'call-audio') "></i>
+        <i class="number fa fa-phone " style="font-size:48px;color:red " (click)="sipHangUp() "></i>
+
+        <br>
+        <br>
+        <input *ngIf="transfer " type="button " class="btn btn-success " id="btnTransfer " value="Transfer " (click)="sipTransfer() " />
+        <button *ngIf="transfer " class="number fa fa-microphone " (click)="sipToggleMute() "></button>
+    </div>
+    <div class="caja-inferior ">
+    </div>
+</section>
+-->
