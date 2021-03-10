@@ -6,6 +6,7 @@ import { Contact } from 'src/app/entities/contacts';
 import { Observable, timer } from 'rxjs';
 import { trigger, state, style, animate, transition } from '@angular/animations';
 import { map } from 'jquery';
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 
 declare let SIPml;
 declare let Dexie;
