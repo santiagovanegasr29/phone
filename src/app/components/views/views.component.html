@@ -1,29 +1,31 @@
 <div class="container md-12" id="padding_box">
     <div *ngIf="login">
-        <img class="logo" src="assets/img/logo-simbolo.png">
-        <label class="logo">Softphone</label>
+        <div class="login-form-container">
+            <img class="logo" src="assets/img/logo-simbolo.png">
+            <label class="title">Softphone</label>
 
-        <form class="text-left" (ngSubmit)="sipRegister()" ngNativeValidate>
-            <br>
-            <label class="label">User : </label>
-            <input id="impi" name="impi" type="impi" class="form-control" [(ngModel)]="dataform.impi" value="" required placeholder="2250">
-            <br>
-            <label class="label">Domain : </label>
-            <input id="impu" name="impu" type="impu" class="form-control" [(ngModel)]="dataform.impu" value="" required placeholder="voip.uxomnitech.com">
-            <br>
-            <label class="label">Password : </label>
-            <input id="password" name="password" type="password" class="form-control" [(ngModel)]="dataform.password" value="" required placeholder="***********">
-            <br>
-            <label class="label">Display name : </label>
-            <input id="display_name" name="display_name" type="display_name" class="form-control" [(ngModel)]="dataform.display_name" value="" required placeholder="santiago">
-            <br>
-            <label class="label">Websocket proxy url : </label>
-            <input id="websocket_proxy_url" name="websocket_proxy_url" type="websocket_proxy_url" class="form-control" [(ngModel)]="dataform.websocket_proxy_url" value="" required placeholder="wss://voip.uxomnitech.com:8089/ws">
-            <br>
-            <button type="submit" class="btnlogin btn btn-lg btn-primary btn-outline-dark col-3">Login</button>
-        </form>
+            <form class="text-left" (ngSubmit)="sipRegister()" ngNativeValidate>
+                <br>
+                <label class="label">User : </label>
+                <input id="impi" name="impi" type="impi" class="form-control" [(ngModel)]="dataform.impi" value="" required placeholder="2250">
+                <br>
+                <label class="label">Domain : </label>
+                <input id="impu" name="impu" type="impu" class="form-control" [(ngModel)]="dataform.impu" value="" required placeholder="voip.uxomnitech.com">
+                <br>
+                <label class="label">Password : </label>
+                <input id="password" name="password" type="password" class="form-control" [(ngModel)]="dataform.password" value="" required placeholder="***********">
+                <br>
+                <label class="label">Display name : </label>
+                <input id="display_name" name="display_name" type="display_name" class="form-control" [(ngModel)]="dataform.display_name" value="" required placeholder="santiago">
+                <br>
+                <label class="label">Websocket proxy url : </label>
+                <input id="websocket_proxy_url" name="websocket_proxy_url" type="websocket_proxy_url" class="form-control" [(ngModel)]="dataform.websocket_proxy_url" value="" required placeholder="wss://voip.uxomnitech.com:8089/ws">
+                <br>
+                <button type="submit" class="btnlogin btn btn-lg btn-dark btn-outline-secondary col-4">Login</button>
+            </form>
+        </div>
     </div>
-    <div class="contacts md-10">
+    <div class="contacts md-10" *ngIf="logout">
         <!--*ngIf="logout"-->
         <div class="UserContact">
             <ng-template #contentUser let-modal>
@@ -52,7 +54,7 @@
         <div class="messaging  md-10">
             <div class="inbox_msg">
                 <div class="inbox_people">
-                    <div class="headind_srch  md-7">
+                    <div class="headind_srch  md-9">
                         <i *ngIf="logout" class="login fa fa-sign-out" (click)='sipUnRegister();'></i>
                         <div class="recent_heading">
 
@@ -70,7 +72,7 @@
 
                             </div>
                             <i class="numberPhones fa fa-th md-6" [@numbersAnimation]="isOpen ? 'open' : 'closed'" (click)='toggle();'></i>
-                            <input for="number" id="numberphone" name="number" type="tel" class="numberphone form-control" placeholder="Phone" [(ngModel)]="numberPhone.phone">
+                            <input for="number" id="numberphone" name="number" type="tel" class="numberphone form-control" required placeholder="Phone" [(ngModel)]="numberPhone.phone">
                             <br>
                             <i class="number fa fa-phone" id="sipCall2" (click)="loadingCall();sipCall('call-audio')"></i>
                             <i class="hangUpCall fa fa-phone" (click)="sipHangUp()"></i>
@@ -137,6 +139,7 @@
                         <div *ngIf="historyCalls" class="media-body md-6">
                             <div class="media" *ngFor="let call of calls.reverse();"><img src="https://www.w3schools.com/w3css/img_avatar2.png" alt="user" width="40" class="rounded-circle">
                                 <h6 class="text medias">Number: {{call.call}}</h6>
+                                <h6 class="text medias">Name: {{call.name}}</h6>
                                 <div class="medias">
                                     <p class="text font-italic  text-small">Fecha: {{call.date}}</p>
                                     <p class="text font-italic  text-small">Hora: {{call.time}}</p>
@@ -162,7 +165,7 @@
                       </svg>
 
 
-                    <div class="msg_history llamada md-8">
+                    <div class="msg_history llamada md-8" *ngIf="calling">
                         <!--*ngIf="calling"-->
                         <div class="col-md-6">
                             <div class="inside">
@@ -179,14 +182,18 @@
                                         <button class="copyNumber btn-dark btn-outline-warning fa fa-copy" (click)="copy()"> Copy Number</button>
                                     </div>
                                     <br>
+
+
+
                                     <div class="options">
                                         <button class="microphone btn option"><i [@muteAnimation]="numberShow ? 'open' : 'close'" class="fa fa-microphone md-20" (click)="sipToggleMute();showNumbers();"></i></button>
                                         <i class="number fa fa-phone md-30" (click)="sipCall('call-audio')"></i>
                                         <i class="hangUpCall  fa fa-phone md-30" (click)="sipHangUp()"></i>
-                                        <input type="button" class="btn btn-success" id="btnTransfer" value="Transfer" (click)="sipTransfer()" />
+                                        <input type="button" class="btn btn-success" id="btnTransfer" value="Transfer" />
                                         <button *ngIf="slash" class="bell btn option"><i class="fa fa-bell-slash" (click)="callSound();callSlash();"></i></button>
 
                                     </div>
+
 
                                 </div>
                             </div>

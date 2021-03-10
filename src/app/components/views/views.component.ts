@@ -5,6 +5,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Contact } from 'src/app/entities/contacts';
 import { Observable, timer } from 'rxjs';
 import { trigger, state, style, animate, transition } from '@angular/animations';
+import { map } from 'jquery';
 
 declare let SIPml;
 declare let Dexie;
@@ -120,6 +121,9 @@ export class ViewsComponent implements OnInit {
   copyNumber;
   range;
   callName;
+  numberTransfer;
+  btnNumberTransfer;
+  transferBnt;
 
 
   constructor(public modalService: NgbModal,private removeClass: ElementRef) {
@@ -159,23 +163,6 @@ export class ViewsComponent implements OnInit {
     document.execCommand('copy');
     this.copyNumber.setAttribute('disabled', 'disabled');
     document.body.removeChild(this.copyNumber);
-    /* this.copyNumber.addEventListener("click", (event)=>{
-    console.log(event);
-    this.range = document.createRange();
-    this.range.selectNode(this.copyNumber);
-    window.getSelection().addRange(this.range);
-
-
-    try {
-      // intentar copiar el contenido seleccionado
-      var resultado = document.execCommand('copy');
-      console.log(resultado ? 'Number copy' : 'No se pudo copiar el number');
-    } catch(err) {
-      console.log('ERROR al intentar copiar el number');
-    }
-
-    }) */
-
 
 
   }
@@ -297,8 +284,10 @@ export class ViewsComponent implements OnInit {
 
   sipTransfer = () => {
     if (this.oSipSessionCall) {
-      alert('Enter destination number');
-      var s_destination = this.numberPhone.phone
+
+      var s_destination = "";
+      console.log(s_destination);
+
       // var s_destination = prompt('Enter destination number', '');
       //if (!tsk_string_is_null_or_empty(s_destination)) {
       //btnTransfer.disabled = true;
@@ -373,6 +362,7 @@ export class ViewsComponent implements OnInit {
           //uiOnConnectionEvent(false, false);
           this.stopRingbackTone();
           this.stopRingTone();
+
           //divCallOptions.style.opacity = 0;
           //txtCallStatus.innerHTML = '';
           console.log(bFailure ? "<i>Disconnected: <b>" + e.description + "</b></i>" : "<i>Disconnected</i>")
@@ -399,7 +389,7 @@ export class ViewsComponent implements OnInit {
             this.startRingTone();
             var sRemoteNumber = (this.oSipSessionCall.getRemoteFriendlyName() || 'unknown');
             //this.incomingcall = document.getElementById("entrante");
-            this.callName = e.o_event.o_message.o_hdr_From.s_display_name+"      ";
+            this.callName = e.o_event.o_message.o_hdr_From.s_display_name;
             this.incomingcall = sRemoteNumber;
             //alert(e.o_event.o_message.o_hdr_From.s_display_name+"  lo esta llamando su numero es = "+sRemoteNumber);
             //this.showNotifICall(sRemoteNumber);
@@ -421,11 +411,11 @@ export class ViewsComponent implements OnInit {
       }
       case 'm_permission_refused':
         {
+
           //divGlassPanel.style.visibility = 'hidden';
           if (e.type == 'm_permission_refused') {
 
-
-            //uiCallTerminated('Media stream permission denied');
+                        //uiCallTerminated('Media stream permission denied');
           }
           break;
         }
@@ -434,10 +424,6 @@ export class ViewsComponent implements OnInit {
     }
   }
   onSipEventSession = (e) => {
-
-
-
-
 
     console.log('==session event = ' + e.type);
 
@@ -467,21 +453,26 @@ export class ViewsComponent implements OnInit {
             if (bConnected) {
               this.stopRingbackTone();
               this.stopRingTone();
-
+              this.time.unsubscribe();
 
               if (this.oNotifICall) {
                 this.oNotifICall.cancel();
                 this.oNotifICall = null;
               }
+
             }
             if (e.description == "In Call") {
-            this.callName = "  ";
+
             this.incomingcall = this.numberPhone.phone;
             this.loading = false;
 
            }
 
             console.log("<i>" + e.description + "</i>");
+
+              this.numbers = timer(1000, 1000);
+              this.time = this.numbers.subscribe(x => this.callTime = x);
+              console.log(this.callTime);
 
             if (SIPml.isWebRtc4AllSupported()) {
 
@@ -491,6 +482,7 @@ export class ViewsComponent implements OnInit {
           break;
         } // 'connecting' | 'connected'
       case 'terminating': case 'terminated':
+
         {
           if (e.session == this.oSipSessionRegister) {
             //uiOnConnectionEvent(false, false);
@@ -798,6 +790,7 @@ export class ViewsComponent implements OnInit {
 
     });
   }
+
 
   updateCalls(id) {
 

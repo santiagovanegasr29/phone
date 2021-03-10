@@ -1,89 +1,89 @@
 {
-    "name": "app-electron",
-    "version": "0.0.0",
-    "main": "main.js",
-    "scripts": {
-        "ng": "ng",
-        "start": "ng serve",
-        "build": "ng build",
-        "test": "ng test",
-        "lint": "ng lint",
-        "e2e": "ng e2e",
-        "electron": "electron .",
-        "electron-build": "ng build --prod && electron .",
-        "start-electron": "ng build --base-href ./ && electron .",
-        "pack": "build --dir",
-        "dist2": "build"
-    },
-    "private": true,
-    "dependencies": {
-        "@angular/animations": "~10.0.14",
-        "@angular/common": "~10.0.14",
-        "@angular/compiler": "~10.0.14",
-        "@angular/core": "~10.0.14",
-        "@angular/forms": "~10.0.14",
-        "@angular/localize": "^10.0.14",
-        "@angular/platform-browser": "~10.0.14",
-        "@angular/platform-browser-dynamic": "~10.0.14",
-        "@angular/router": "~10.0.14",
-        "@ng-bootstrap/ng-bootstrap": "^9.0.2",
-        "angular-webrtc-sipml": "^1.0.3",
-        "bootstrap": "^4.6.0",
-        "ecmascript-webrtc-sipml": "^1.0.11",
-        "electron": "^11.1.0",
-        "electron-webrtc": "^0.3.0",
-        "indexeddb-angular": "^0.1.8",
-        "jquery": "^3.5.1",
-        "rxjs": "^6.5.5",
-        "tslib": "^2.0.0",
-        "zone.js": "~0.10.3"
-    },
-    "author": "santiago",
-    "license": "MIT",
-    "license": "ISC",
-    "build": {
-        "appId": "softphone-v1",
-        "asar": true,
-        "dmg": {
-            "content": [{
-                    "x": 110,
-                    "Y": 150
-                },
-                {
-                    "x": 240,
-                    "y": 150,
-                    "type": "link",
-                    "path": "/Aplications"
-                }
-
-            ]
+  "name": "app-electron",
+  "version": "0.0.0",
+  "main": "main.js",
+  "scripts": {
+    "ng": "ng",
+    "start": "ng serve",
+    "build": "ng build",
+    "test": "ng test",
+    "lint": "ng lint",
+    "e2e": "ng e2e",
+    "electron": "electron .",
+    "electron-build": "ng build --prod && electron .",
+    "start-electron": "ng build --base-href ./ && electron .",
+    "pack": "build --dir",
+    "dist2": "build"
+  },
+  "private": true,
+  "dependencies": {
+    "@angular/animations": "~10.0.14",
+    "@angular/cdk": "^10.2.7",
+    "@angular/common": "~10.0.14",
+    "@angular/compiler": "~10.0.14",
+    "@angular/core": "~10.0.14",
+    "@angular/forms": "~10.0.14",
+    "@angular/localize": "^10.0.14",
+    "@angular/material": "^10.2.7",
+    "@angular/platform-browser": "~10.0.14",
+    "@angular/platform-browser-dynamic": "~10.0.14",
+    "@angular/router": "~10.0.14",
+    "@ng-bootstrap/ng-bootstrap": "^9.0.2",
+    "angular-webrtc-sipml": "^1.0.3",
+    "bootstrap": "^4.6.0",
+    "ecmascript-webrtc-sipml": "^1.0.11",
+    "electron": "^11.1.0",
+    "electron-webrtc": "^0.3.0",
+    "indexeddb-angular": "^0.1.8",
+    "jquery": "^3.5.1",
+    "rxjs": "^6.5.5",
+    "tslib": "^2.0.0",
+    "zone.js": "~0.10.3"
+  },
+  "author": "santiago",
+  "license": "ISC",
+  "build": {
+    "appId": "softphone-v1",
+    "asar": true,
+    "dmg": {
+      "content": [
+        {
+          "x": 110,
+          "Y": 150
         },
-        "win": {
-            "target": "NSIS",
-            "icon": "build/Phone.ico"
+        {
+          "x": 240,
+          "y": 150,
+          "type": "link",
+          "path": "/Aplications"
         }
-
+      ]
     },
-    "devDependencies": {
-        "@angular-devkit/build-angular": "^0.1100.4",
-        "@angular/cli": "~10.0.8",
-        "@angular/compiler-cli": "~10.0.14",
-        "@types/jasmine": "~3.5.0",
-        "@types/jasminewd2": "~2.0.3",
-        "@types/jquery": "^3.5.5",
-        "@types/node": "^12.11.1",
-        "codelyzer": "^6.0.0",
-        "electron-builder": "^22.10.5",
-        "jasmine-core": "~3.5.0",
-        "jasmine-spec-reporter": "~5.0.0",
-        "karma": "~5.0.0",
-        "karma-chrome-launcher": "~3.1.0",
-        "karma-coverage-istanbul-reporter": "~3.0.2",
-        "karma-jasmine": "~3.3.0",
-        "karma-jasmine-html-reporter": "^1.5.0",
-        "protractor": "~7.0.0",
-        "ts-node": "~8.3.0",
-        "tslint": "~6.1.0",
-        "typescript": "~3.9.5"
+    "win": {
+      "target": "NSIS",
+      "icon": "build/Phone.ico"
     }
+  },
+  "devDependencies": {
+    "@angular-devkit/build-angular": "^0.1100.4",
+    "@angular/cli": "~10.0.8",
+    "@angular/compiler-cli": "~10.0.14",
+    "@types/jasmine": "~3.5.0",
+    "@types/jasminewd2": "~2.0.3",
+    "@types/jquery": "^3.5.5",
+    "@types/node": "^12.11.1",
+    "codelyzer": "^6.0.0",
+    "electron-builder": "^22.10.5",
+    "jasmine-core": "~3.5.0",
+    "jasmine-spec-reporter": "~5.0.0",
+    "karma": "~5.0.0",
+    "karma-chrome-launcher": "~3.1.0",
+    "karma-coverage-istanbul-reporter": "~3.0.2",
+    "karma-jasmine": "~3.3.0",
+    "karma-jasmine-html-reporter": "^1.5.0",
+    "protractor": "~7.0.0",
+    "ts-node": "~8.3.0",
+    "tslint": "~6.1.0",
+    "typescript": "~3.9.5"
+  }
 }

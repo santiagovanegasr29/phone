@@ -53,9 +53,13 @@
 }
 
 .logo {
+    margin: 50px;
     border-radius: 10px;
     font: oblique bold 400% cursive;
-    padding-left: 60px;
+}
+
+.title {
+    font: oblique bold 280% cursive;
 }
 
 .logoP {
@@ -140,7 +144,7 @@ img {
     background: #f8f8f8 none repeat scroll 0 0;
     float: left;
     overflow: hidden;
-    width: 25%;
+    width: 29%;
     border-right: 1px solid #c4c4c4;
 }
 
@@ -330,7 +334,7 @@ img {
 
 .msg_history {
     height: 800px;
-    width: 1400px;
+    width: 1300px;
     overflow-y: auto;
     overflow-x: auto;
 }
@@ -506,6 +510,7 @@ img {
 
 .contact-scrollbar-css::-webkit-scrollbar {
     width: 5px;
+    height: 5px;
 }
 
 .contact-scrollbar-css::-webkit-scrollbar-track {
@@ -582,4 +587,11 @@ img {
 .bell:hover {
     cursor: pointer;
     color: #ff1717;
+}
+
+.login-form-container {
+    width: 500px;
+    border-radius: 3px;
+    background-color: #5186d0;
+    overflow: hidden;
 }
