@@ -65,6 +65,7 @@
 .logoP {
     font: oblique bold 400% cursive;
     display: flex;
+    margin: 5px;
 }
 
 .contacts {
@@ -73,6 +74,7 @@
     border-radius: 7px;
     display: flex;
     flex-direction: column;
+   
 }
 
 .entrante1 {
@@ -145,7 +147,8 @@ img {
     float: left;
     overflow: hidden;
     width: 29%;
-    border-right: 1px solid #c4c4c4;
+   
+ 
 }
 
 .top_spac {
@@ -337,6 +340,7 @@ img {
     width: 1300px;
     overflow-y: auto;
     overflow-x: auto;
+   
 }
 
 .btnlogin {
@@ -353,6 +357,7 @@ img {
 
 .container {
     max-width: 2000px;
+   
 }
 
 .login {
@@ -360,6 +365,7 @@ img {
     cursor: pointer;
     color: red;
     font-size: 40px;
+
 }
 
 .avatar {
@@ -367,7 +373,7 @@ img {
 }
 
 .chat {
-    color: #0b00d3;
+   
     width: 50px;
     height: 50px;
     border-radius: 50px;
@@ -390,7 +396,10 @@ img {
 .btn {
     border: .5px solid transparent;
 }
-
+.con{
+   
+    font-size: 40px;
+}
 .contactAdd:hover {
     cursor: pointer;
     color: #ff1717;
@@ -575,7 +584,7 @@ img {
 .options {
     display: flex;
     border-radius: 220px;
-    background-color: blue;
+
     background-clip: padding-box;
 }
 
@@ -592,6 +601,25 @@ img {
 .login-form-container {
     width: 500px;
     border-radius: 3px;
-    background-color: #5186d0;
     overflow: hidden;
+}
+.card{
+    width:200px;
+    height: 70px;
+    margin-left: 400px;
+    background-color: #707070;
+    border-radius: 40px solid;
+    vertical-align: auto;
+}
+
+.btnTransfer{
+display: block;
+width: 150px;
+}
+.phoneImg{
+    display: flex;
+    margin-top: 200px;
+}
+.name{
+    margin-left: 90px;
 }

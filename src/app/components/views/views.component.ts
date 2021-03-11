@@ -1,12 +1,11 @@
-import { Component, ElementRef, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Login } from '../../entities/login';
 import { PhoneNumber } from '../../entities/phoneNumber';
+import {PhoneTransfer}from '../../entities/phoneTransfer'
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Contact } from 'src/app/entities/contacts';
 import { Observable, timer } from 'rxjs';
 import { trigger, state, style, animate, transition } from '@angular/animations';
-import { map } from 'jquery';
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 
 declare let SIPml;
 declare let Dexie;
@@ -74,6 +73,9 @@ db.version(1).stores({
 })
 
 export class ViewsComponent implements OnInit {
+  @ViewChild('numberTransfer')numberTransfer:ElementRef;
+  @ViewChild('audio_remote')audio_remote:ElementRef;
+  audioRemote;
   formContact: Contact;
   formContactEdit: Contact;
   closeResult = '';
@@ -98,7 +100,7 @@ export class ViewsComponent implements OnInit {
   oSipSessionRegister;
   oSipSessionCall;
   oSipSessionTransferCall;
-  audioRemote;
+  
   bFullScreen = false;
   oNotifICall;
   bDisableVideo = false;
@@ -122,9 +124,8 @@ export class ViewsComponent implements OnInit {
   copyNumber;
   range;
   callName;
-  numberTransfer;
   btnNumberTransfer;
-  transferBnt;
+  transferBnt=false;
 
 
   constructor(public modalService: NgbModal,private removeClass: ElementRef) {
@@ -136,16 +137,12 @@ export class ViewsComponent implements OnInit {
 
   }
 
-
   ngOnInit(): void {
     this.getContacts();
     this.getHistoryCalls();
     this.ringtone = document.getElementById("ringtone");
     this.ringbacktone = document.getElementById("ringbacktone");
   }
-
-
-
   open(content) {
     this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
@@ -165,7 +162,6 @@ export class ViewsComponent implements OnInit {
     this.copyNumber.setAttribute('disabled', 'disabled');
     document.body.removeChild(this.copyNumber);
 
-
   }
 //registring user
   sipRegister = () => {
@@ -179,10 +175,12 @@ export class ViewsComponent implements OnInit {
       this.oSipStack = new SIPml.Stack({
         realm: "asterisk.org",
         impi: this.dataform.impi,
-        impu: "sip:" + this.dataform.impi + "@" + this.dataform.impu,
+        //impu: "sip:" + this.dataform.impi + "@" + this.dataform.impu,
+        impu: "sip:"+this.dataform.impi+"@cc.uxomnitech.com",
         password: this.dataform.password,
         display_name: this.dataform.display_name,
-        websocket_proxy_url: this.dataform.websocket_proxy_url,
+       // websocket_proxy_url: this.dataform.websocket_proxy_url,
+        websocket_proxy_url: "wss://cc.uxomnitech.com:8089/ws",
         /*
           realm: "asterisk.org",
           impi: "2250",
@@ -213,9 +211,9 @@ export class ViewsComponent implements OnInit {
 
   sipCall = (s_type) => {
     console.log(s_type);
-    let audioRemote = document.getElementById("audio_remote");
+//let audioRemote = document.getElementById("audio_remote");
     this.oConfigCall = {
-      audio_remote: audioRemote,
+      audio_remote: this.audio_remote,
       audi_Call: this.audiocall,
       events_listener: { events: '*', listener: this.onSipEventSession },
     }
@@ -285,10 +283,9 @@ export class ViewsComponent implements OnInit {
 
   sipTransfer = () => {
     if (this.oSipSessionCall) {
-
-      var s_destination = "";
+      console.log(this.numberTransfer.nativeElement.value);
+      var s_destination = this.numberTransfer.nativeElement.value;
       console.log(s_destination);
-
       // var s_destination = prompt('Enter destination number', '');
       //if (!tsk_string_is_null_or_empty(s_destination)) {
       //btnTransfer.disabled = true;
@@ -878,6 +875,10 @@ export class ViewsComponent implements OnInit {
 
     }
     this.stopRingTone();
+  }
+
+  tranferCall(){
+      this.transferBnt = !this.transferBnt;
   }
 
 
