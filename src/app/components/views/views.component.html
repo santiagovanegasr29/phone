@@ -1,36 +1,53 @@
 <div class="container md-12" id="padding_box">
-    <div *ngIf="login">
-        <div class="login-form-container">
-            <img class="logo" src="assets/img/logo-simbolo.png">
-            <label class="title">Softphone</label>
 
-            <form class="text-left" (ngSubmit)="sipRegister()" ngNativeValidate>
-                <br>
-                <label class="label">User : </label>
-                <input id="impi" name="impi" type="impi" class="form-control" [(ngModel)]="dataform.impi" value=""
-                    required placeholder="2250">
-                <br>
-               <!--  <label class="label">Domain : </label>
+
+  <div   *ngIf="login" class="wrapper fadeInDown">
+
+    <div class="fadeIn first">
+        <img class="logo" src="assets/img/logo-simbolo.png" id="icon" alt="User Icon" class="logo" />
+      </div>
+
+    <div id="formContent">
+
+        <div class="text-login text-left">
+            <div class="title-login fadeIn second">Please Login In</div>
+            <div class="subtitle-login fadeIn second">All fields are required</div>
+        </div>
+
+      <form class="text-left" (ngSubmit)="sipRegister()" ngNativeValidate>
+
+        <input type="text"  class="fadeIn second"  placeholder="User"id="impi" name="impi" [(ngModel)]="dataform.impi" required>
+
+
+         <!--  <label class="label">Domain : </label>
                 <input id="impu" name="impu" type="impu" class="form-control" [(ngModel)]="dataform.impu" value=""
                     required placeholder="voip.uxomnitech.com"> -->
-                <br>
-                <label class="label">Password : </label>
-                <input id="password" name="password" type="password" class="form-control"
-                    [(ngModel)]="dataform.password" value="" required placeholder="***********">
-                <br>
-                <label class="label">Display name : </label>
-                <input id="display_name" name="display_name" type="display_name" class="form-control"
-                    [(ngModel)]="dataform.display_name" value="" required placeholder="santiago">
-                <br>
-               <!--  <label class="label">Websocket proxy url : </label>
+
+        <!-- <input type="text" id="login" class="fadeIn second" name="login" placeholder="domain"> -->
+        <input type="password" class="fadeIn third form-control"  id="password" name="password"
+        [(ngModel)]="dataform.password" required placeholder="Password">
+
+        <input type="text" class="fadeIn second" placeholder="Display Name"id="display_name" name="display_name"
+        [(ngModel)]="dataform.display_name" required>
+
+         <!--  <label class="label">Websocket proxy url : </label>
                 <input id="websocket_proxy_url" name="websocket_proxy_url" type="websocket_proxy_url"
                     class="form-control" [(ngModel)]="dataform.websocket_proxy_url" value="" required
                     placeholder="wss://voip.uxomnitech.com:8089/ws">
                 <br> -->
-                <button type="submit" class="btnlogin btn btn-lg btn-dark btn-outline-secondary col-4">Login</button>
-            </form>
-        </div>
+        <!-- <input type="text" id="login" class="fadeIn second" name="login" placeholder="proxy URL"> -->
+        <input type="submit" class="fadeIn fourth" value="Login">
+
+
+
+      </form>
+
+      <div id="formFooter">
+        <a class="underlineHover" href="#">Forgot Password?</a>
+      </div>
+
     </div>
+  </div>
     <div class="contacts md-10" *ngIf="logout">
         <!--*ngIf="logout"-->
         <div class="UserContact">
@@ -65,7 +82,7 @@
             <div class="inbox_msg">
                 <div class="inbox_people">
                     <div class="headind_srch  md-9">
-                        
+
                         <div class="recent_heading">
 
                             <div class="logoP">
@@ -78,7 +95,7 @@
                         </div>
                         <br><br>
                         <div class="srch_bar">
-                          
+
                             <i class="numberPhones fa fa-th md-6" [@numbersAnimation]="isOpen ? 'open' : 'closed'"
                                 (click)='toggle();'></i>
                             <input for="number" id="numberphone" name="number" type="tel"
@@ -225,14 +242,14 @@
 
                                         <label class="callTime">{{callTime}}</label>
                                         <br>
-                                        <div class="card" *ngIf="transferBnt"> 
+                                        <div class="card" *ngIf="transferBnt">
                                             <input #numberTransfer placeholder="number transfer" class="btnTransfer" type="text">
                                             <input type="submit" value="Transfer" (click)="sipTransfer()">
                                         </div>
                                         <button class="copyNumber btn-dark btn-outline-warning fa fa-copy"
                                             (click)="copy()"> Copy
                                             Number</button>
-                                          
+
 
                                     </div>
                                     <br>
@@ -263,7 +280,7 @@
                             <i *ngIf="logout" class="login fa fa-sign-out" (click)='sipUnRegister()'></i>
                             <img  class="phoneImg"
                             src="https://www.flaticon.es/svg/vstatic/svg/3237/3237439.svg?token=exp=1615499706~hmac=0925dad9ee864be935186a23284ca834" alt="avatar">
-                           
+
                         </div>
                     </div>
                 </div>

@@ -1,7 +1,7 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Login } from '../../entities/login';
 import { PhoneNumber } from '../../entities/phoneNumber';
-import {PhoneTransfer}from '../../entities/phoneTransfer'
+
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Contact } from 'src/app/entities/contacts';
 import { Observable, timer } from 'rxjs';
@@ -20,7 +20,7 @@ db.version(1).stores({
   selector: 'app-views',
   templateUrl: './views.component.html',
   styleUrls: ['./views.component.css'],
-  animations: [ // aqui iran nuestras animaciones
+  animations: [ // animaciones
 
     trigger('numbersAnimation', [
       state('open', style({
@@ -100,7 +100,7 @@ export class ViewsComponent implements OnInit {
   oSipSessionRegister;
   oSipSessionCall;
   oSipSessionTransferCall;
-  
+
   bFullScreen = false;
   oNotifICall;
   bDisableVideo = false;
