@@ -485,8 +485,6 @@ export class ViewsComponent implements OnInit {
 
             console.log("<i>" + e.description + "</i>");
             
-            
-
             if (SIPml.isWebRtc4AllSupported()) {
 
             }
