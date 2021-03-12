@@ -1,53 +1,42 @@
 <div class="container md-12" id="padding_box">
-
-
-  <div   *ngIf="login" class="wrapper fadeInDown">
-
-    <div class="fadeIn first">
-        <img class="logo" src="assets/img/logo-simbolo.png" id="icon" alt="User Icon" class="logo" />
-      </div>
-
-    <div id="formContent">
-
-        <div class="text-login text-left">
-            <div class="title-login fadeIn second">Please Login In</div>
-            <div class="subtitle-login fadeIn second">All fields are required</div>
+    <div *ngIf="login" class="wrapper fadeInDown">
+        <div class="fadeIn first">
+            <img class="logo" src="assets/img/logo.png" id="icon" alt="User Icon" class="logo" />
         </div>
+        <div id="formContent">
 
-      <form class="text-left" (ngSubmit)="sipRegister()" ngNativeValidate>
+            <div class="text-login text-left">
+                <div class="title-login fadeIn second">Please Login In</div>
+                <div class="subtitle-login fadeIn second">All fields are required</div>
+            </div>
 
-        <input type="text"  class="fadeIn second"  placeholder="User"id="impi" name="impi" [(ngModel)]="dataform.impi" required>
-
-
-         <!--  <label class="label">Domain : </label>
+            <form class="text-left" (ngSubmit)="sipRegister()" ngNativeValidate>
+                <input type="text" class="fadeIn second" placeholder="User (extention)" id="impi" name="impi"
+                    [(ngModel)]="dataform.impi" required>
+                <span class="fa fa-user fadeIn"></span>
+                <!--  <label class="label">Domain : </label>
                 <input id="impu" name="impu" type="impu" class="form-control" [(ngModel)]="dataform.impu" value=""
                     required placeholder="voip.uxomnitech.com"> -->
+                <!-- <input type="text" id="login" class="fadeIn second" name="login" placeholder="domain"> -->
+                <input type="password" #inputPassword id="input-password"  [(ngModel)]="dataform.password" class="fadeIn third" name="login" placeholder="Password" required>                    
+                <span id="show_password" (click)="showPassword()" class="fa fa-eye-slash fadeIn second icon-password"></span>
 
-        <!-- <input type="text" id="login" class="fadeIn second" name="login" placeholder="domain"> -->
-        <input type="password" class="fadeIn third form-control"  id="password" name="password"
-        [(ngModel)]="dataform.password" required placeholder="Password">
 
-        <input type="text" class="fadeIn second" placeholder="Display Name"id="display_name" name="display_name"
-        [(ngModel)]="dataform.display_name" required>
-
-         <!--  <label class="label">Websocket proxy url : </label>
+                <input type="text" class="fadeIn second" placeholder="Display Name" id="display_name"
+                    name="display_name" [(ngModel)]="dataform.display_name" required>
+                <!--  <label class="label">Websocket proxy url : </label>
                 <input id="websocket_proxy_url" name="websocket_proxy_url" type="websocket_proxy_url"
                     class="form-control" [(ngModel)]="dataform.websocket_proxy_url" value="" required
                     placeholder="wss://voip.uxomnitech.com:8089/ws">
                 <br> -->
-        <!-- <input type="text" id="login" class="fadeIn second" name="login" placeholder="proxy URL"> -->
-        <input type="submit" class="fadeIn fourth" value="Login">
-
-
-
-      </form>
-
-      <div id="formFooter">
-        <a class="underlineHover" href="#">Forgot Password?</a>
-      </div>
-
+                <!-- <input type="text" id="login" class="fadeIn second" name="login" placeholder="proxy URL"> -->
+                <input type="submit" class="bntlogin fadeIn fourth" value="Login">
+            </form>
+            <div id="formFooter">
+              <!--   <a class="underlineHover" href="#">Forgot Password?</a> -->
+            </div>
+        </div>
     </div>
-  </div>
     <div class="contacts md-10" *ngIf="logout">
         <!--*ngIf="logout"-->
         <div class="UserContact">
@@ -77,7 +66,6 @@
                 </div>
             </ng-template>
         </div>
-
         <div class="messaging  md-10">
             <div class="inbox_msg">
                 <div class="inbox_people">
@@ -86,7 +74,8 @@
                         <div class="recent_heading">
 
                             <div class="logoP">
-                                <img src="assets/img/logo-simbolo.png"><label class="name">{{this.dataform.display_name}}</label>
+                                <img src="assets/img/logo.png"><label
+                                    class="name">{{this.dataform.display_name}}</label>
                             </div>
                             <div class="con bg-gray px-2 py-2 bg-light">
                                 <i class="contactAdd fa fa-user-plus" (click)='openUser(contentUser)'></i>
@@ -214,8 +203,6 @@
                         </div>
                     </div>
                 </div>
-
-
                 <div class="mesgs">
                     <svg class="load" *ngIf="loading" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50">
                         <path fill="#051DF5"
@@ -224,8 +211,6 @@
                                 dur="0.5s" repeatCount="indefinite" />
                         </path>
                     </svg>
-
-
                     <div class="msg_history llamada md-8" *ngIf="calling">
                         <!--*ngIf="calling"-->
                         <div class="col-md-6">
@@ -240,10 +225,11 @@
                                         <input class="entrante" type="text" value="{{incomingcall}} " name=""
                                             id="entrante" disabled>
 
-                                        <label class="callTime">{{callTime}}</label>
+                                        <label class="callTime">{{this.secondsToString(this.callTime)}}</label>
                                         <br>
                                         <div class="card" *ngIf="transferBnt">
-                                            <input #numberTransfer placeholder="number transfer" class="btnTransfer" type="text">
+                                            <input #numberTransfer placeholder="number transfer" class="btnTransfer"
+                                                type="text">
                                             <input type="submit" value="Transfer" (click)="sipTransfer()">
                                         </div>
                                         <button class="copyNumber btn-dark btn-outline-warning fa fa-copy"
@@ -253,14 +239,12 @@
 
                                     </div>
                                     <br>
-
-
-
                                     <div class="options">
                                         <button class="microphone btn option"><i
-                                                [@muteAnimation]="numberShow ? 'open' : 'close'"
-                                                class="fa fa-microphone md-20"
+                                                 [@muteAnimation]="numberShow ? 'open' : 'close'"
+                                                class="fa fa-microphone" id="microphone"
                                                 (click)="sipToggleMute();showNumbers();"></i></button>
+
                                         <i class="number fa fa-phone md-30" (click)="sipCall('call-audio')"></i>
                                         <i class="hangUpCall  fa fa-phone md-30" (click)="sipHangUp()"></i>
                                         <input type="button" class="btn btn-success" id="btnTransfer" value="Transfer"
@@ -278,9 +262,9 @@
                     <div *ngIf="text">
                         <div class="msg_history md-3">
                             <i *ngIf="logout" class="login fa fa-sign-out" (click)='sipUnRegister()'></i>
-                            <img  class="phoneImg"
-                            src="https://www.flaticon.es/svg/vstatic/svg/3237/3237439.svg?token=exp=1615499706~hmac=0925dad9ee864be935186a23284ca834" alt="avatar">
-
+                            <img class="phoneImg"
+                                src="https://www.flaticon.es/svg/vstatic/svg/3237/3237439.svg?token=exp=1615499706~hmac=0925dad9ee864be935186a23284ca834"
+                                alt="avatar">
                         </div>
                     </div>
                 </div>
@@ -292,8 +276,8 @@
 
 </div>
 <audio #audio_remote id="audio_remote" autoplay="autoplay"></audio>
-<audio  id="ringtone" loop src="../../../assets/js/sounds/ringing.mp3"></audio>
-<audio  id="ringbacktone" loop src="../../../assets/js/sounds/calling.mp3"> </audio>
+<audio id="ringtone" loop src="../../../assets/js/sounds/ringing.mp3"></audio>
+<audio id="ringbacktone" loop src="../../../assets/js/sounds/calling.mp3"> </audio>
 
 
 

@@ -6,9 +6,7 @@
     animation-fill-mode: forwards;
 }
 
-.form-control {
-    text-align: center;
-}
+
 
 .numberphone {
     font-size: 20px;
@@ -100,6 +98,7 @@
 
 .text-left {
     margin: 40px;
+    margin-left: 90px;
 }
 
 * {
@@ -646,8 +645,6 @@ h2 {
   color: #cccccc;
 }
 
-
-
 /* STRUCTURE */
 
 .wrapper {
@@ -837,7 +834,10 @@ input[type=password] {
 @-moz-keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
 @keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
 
+
+
 .fadeIn {
+
   opacity:0;
   -webkit-animation:fadeIn ease-in 1;
   -moz-animation:fadeIn ease-in 1;
@@ -896,8 +896,6 @@ input[type=password] {
   width: 100%;
 }
 
-
-
 /* OTHERS */
 
 *:focus {
@@ -907,17 +905,15 @@ input[type=password] {
 #icon {
   width:60%;
 }
-
-
 /* ------- */
 
 .logo {
-  width: 70px!important;
+  width: 230px!important;
   margin-bottom: 35px;
 }
 
 .text-login {
-  padding: 20px 36px;
+  padding: 10px 26px;
 }
 
 .title-login {
@@ -935,3 +931,10 @@ input[type=password] {
 form {
   padding: 25px 15px;
 }
+.icon-password {
+    position: absolute;
+    right: 60px;
+    padding-top: 17px;
+    color: #b1b0b0;
+    font-size: 15px;
+  }

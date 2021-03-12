@@ -9,6 +9,7 @@ import { trigger, state, style, animate, transition } from '@angular/animations'
 
 declare let SIPml;
 declare let Dexie;
+declare let $;
 // database
 var db = new Dexie("contact");
 db.version(1).stores({
@@ -57,10 +58,10 @@ db.version(1).stores({
 
     trigger('muteAnimation', [
       state('open', style({
-        color:"green"
+        color: "green",
       })),
       state('close', style({
-        color:"red"
+        color: "red",
       })),
       transition('open => closed', [
         animate('1s')
@@ -73,8 +74,10 @@ db.version(1).stores({
 })
 
 export class ViewsComponent implements OnInit {
-  @ViewChild('numberTransfer')numberTransfer:ElementRef;
-  @ViewChild('audio_remote')audio_remote:ElementRef;
+  @ViewChild('numberTransfer') numberTransfer: ElementRef;
+  @ViewChild('audio_remote') audio_remote: ElementRef;
+  @ViewChild('inputPassword')inputPassword: ElementRef;
+  @ViewChild('mute')mute: ElementRef;
   audioRemote;
   formContact: Contact;
   formContactEdit: Contact;
@@ -100,7 +103,6 @@ export class ViewsComponent implements OnInit {
   oSipSessionRegister;
   oSipSessionCall;
   oSipSessionTransferCall;
-
   bFullScreen = false;
   oNotifICall;
   bDisableVideo = false;
@@ -119,16 +121,18 @@ export class ViewsComponent implements OnInit {
   time;
   callTime;
   isOpen = true;
-  slash= true;
-  loading=false;
+  slash = true;
+  loading = false;
   copyNumber;
   range;
   callName;
   btnNumberTransfer;
-  transferBnt=false;
+  transferBnt = false;
+  hour;
+  minute;
+  second;
 
-
-  constructor(public modalService: NgbModal,private removeClass: ElementRef) {
+  constructor(public modalService: NgbModal, private removeClass: ElementRef) {
     this.dataform = new Login();
     this.numberPhone = new PhoneNumber();
     this.formContact = new Contact();
@@ -143,6 +147,18 @@ export class ViewsComponent implements OnInit {
     this.ringtone = document.getElementById("ringtone");
     this.ringbacktone = document.getElementById("ringbacktone");
   }
+
+  ngAfterViewInit(): void {
+    //Called after ngAfterContentInit when the component's view has been initialized. Applies to components only.
+    //Add 'implements AfterViewInit' to the class.
+    $(document).ready(()=> {
+      //CheckBox mostrar contraseña
+      $('#ShowPassword').click( ()=> {
+        $('#Password').attr('type', $(this).is(':checked') ? 'text' : 'password');
+      });
+    });
+  }
+
   open(content) {
     this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
@@ -152,7 +168,7 @@ export class ViewsComponent implements OnInit {
   }
 
   //copy number
-  copy(){
+  copy() {
 
     this.copyNumber = document.querySelector('#entrante');
     console.log(this.copyNumber);
@@ -163,7 +179,7 @@ export class ViewsComponent implements OnInit {
     document.body.removeChild(this.copyNumber);
 
   }
-//registring user
+  //registring user
   sipRegister = () => {
 
     try {
@@ -176,10 +192,10 @@ export class ViewsComponent implements OnInit {
         realm: "asterisk.org",
         impi: this.dataform.impi,
         //impu: "sip:" + this.dataform.impi + "@" + this.dataform.impu,
-        impu: "sip:"+this.dataform.impi+"@cc.uxomnitech.com",
+        impu: "sip:" + this.dataform.impi + "@cc.uxomnitech.com",
         password: this.dataform.password,
         display_name: this.dataform.display_name,
-       // websocket_proxy_url: this.dataform.websocket_proxy_url,
+        // websocket_proxy_url: this.dataform.websocket_proxy_url,
         websocket_proxy_url: "wss://cc.uxomnitech.com:8089/ws",
         /*
           realm: "asterisk.org",
@@ -211,7 +227,7 @@ export class ViewsComponent implements OnInit {
 
   sipCall = (s_type) => {
     console.log(s_type);
-//let audioRemote = document.getElementById("audio_remote");
+    //let audioRemote = document.getElementById("audio_remote");
     this.oConfigCall = {
       audio_remote: this.audio_remote,
       audi_Call: this.audiocall,
@@ -383,7 +399,7 @@ export class ViewsComponent implements OnInit {
             // start listening for events
             this.oSipSessionCall.setConfiguration(this.oConfigCall);
             this.calling = true;
-            this.loading=false;
+            this.loading = false;
             this.startRingTone();
             var sRemoteNumber = (this.oSipSessionCall.getRemoteFriendlyName() || 'unknown');
             //this.incomingcall = document.getElementById("entrante");
@@ -404,6 +420,7 @@ export class ViewsComponent implements OnInit {
           break;
         }
       case 'm_permission_accepted': {
+        
         //this.statusCalls = "no Answer";
 
       }
@@ -412,8 +429,8 @@ export class ViewsComponent implements OnInit {
 
           //divGlassPanel.style.visibility = 'hidden';
           if (e.type == 'm_permission_refused') {
-
-                        //uiCallTerminated('Media stream permission denied');
+            
+            //uiCallTerminated('Media stream permission denied');
           }
           break;
         }
@@ -429,8 +446,8 @@ export class ViewsComponent implements OnInit {
       this.loading = false;
       this.statusCalls = "Answer";
       const prueba = document.querySelector('.avatar');
-            console.log(prueba);
-            prueba.classList.remove("avatar");
+      console.log(prueba);
+      prueba.classList.remove("avatar");
     }
 
     switch (e.type) {
@@ -461,20 +478,22 @@ export class ViewsComponent implements OnInit {
             }
             if (e.description == "In Call") {
 
-            this.incomingcall = this.numberPhone.phone;
-            this.loading = false;
+              this.incomingcall = this.numberPhone.phone;
+              this.loading = false;
 
-           }
+            }
 
             console.log("<i>" + e.description + "</i>");
-
-              this.numbers = timer(1000, 1000);
-              this.time = this.numbers.subscribe(x => this.callTime = x);
-              console.log(this.callTime);
+            
+            
 
             if (SIPml.isWebRtc4AllSupported()) {
 
             }
+            this.numbers = timer(1000, 1000);
+            this.time = this.numbers.subscribe(x => this.callTime = x);
+            console.log(this.time);
+            this.secondsToString(this.callTime);  
 
           }
           break;
@@ -494,19 +513,16 @@ export class ViewsComponent implements OnInit {
           }
           else if (e.session == this.oSipSessionCall) {
             //this.uiCallTerminated(e.description);
-
             this.calling = false;
             this.text = true;
             this.oSipSessionCall = null;
             this.slash = true;
-            this.loading= false;
+            this.loading = false;
             this.postHistoryCalls();
             this.getHistoryCalls();
             this.stopRingbackTone();
             this.stopRingTone();
             this.time.unsubscribe();
-
-
           }
           break;
         } // 'terminating' | 'terminated'
@@ -560,7 +576,6 @@ export class ViewsComponent implements OnInit {
           if (e.session == this.oSipSessionCall) {
             var iSipResponseCode = e.getSipResponseCode();
             if (iSipResponseCode == 180 || iSipResponseCode == 183) {
-
               this.calling = true;
               this.text = false;
               this.loading = false;
@@ -577,18 +592,14 @@ export class ViewsComponent implements OnInit {
       case 'm_early_media':
         {
           if (e.session == this.oSipSessionCall) {
-            const prueba = document.querySelector('.avatar');
-            console.log(prueba);
+            const img = document.querySelector('.avatar');
+            console.log(img);
             //prueba.classList.remove("avatar");
             this.stopRingbackTone();
             this.stopRingTone();
             console.log('<i>Early media started</i>');
             //this.statusCalls = "Answer";
-            this.numbers = timer(1000, 1000);
-            this.time = this.numbers.subscribe(x => this.callTime = x);
-            console.log(this.callTime);
-
-          }
+        }
           break;
         }
 
@@ -766,12 +777,12 @@ export class ViewsComponent implements OnInit {
 
   }
   contactCall(numberCall) {
-    this.numberPhone.phone = ''+numberCall;
+    this.numberPhone.phone = '' + numberCall;
     this.sipCall('call-audio');
   }
 
   postHistoryCalls() {
-    db.missedcall.add({name: this.callName, call: this.incomingcall,date: new Date().toLocaleDateString(), time: new Date().toLocaleTimeString(), tipo: this.recent, status: this.statusCalls, callTime: this.callTime }).then(() => {
+    db.missedcall.add({ name: this.callName, call: this.incomingcall, date: new Date().toLocaleDateString(), time: new Date().toLocaleTimeString(), tipo: this.recent, status: this.statusCalls, callTime:  this.secondsToString(this.callTime)}).then(() => {
       return db.missedcall.toArray();
     }).then((missedcall) => {
       console.log("calls: " + JSON.stringify(missedcall));
@@ -847,10 +858,15 @@ export class ViewsComponent implements OnInit {
     this.isOpen = !this.isOpen;
   }
   showNumbers() {
-   this.numberShow = !this.numberShow;
+    if (document.getElementById("microphone").className == "fa fa-microphone" ) {
+      document.getElementById("microphone").className = "fa fa-microphone-slash";
+    }
+    document.getElementById("microphone").className = "fa fa-microphone";
+    
+        this.numberShow = !this.numberShow;
   }
 
-  loadingCall(){
+  loadingCall() {
     this.loading = !this.loading;
     this.text = false;
   }
@@ -866,7 +882,7 @@ export class ViewsComponent implements OnInit {
     this.listContacts = true;
 
   }
-  callSlash(){
+  callSlash() {
     this.slash = !this.slash;
   }
   callSound() {
@@ -877,13 +893,34 @@ export class ViewsComponent implements OnInit {
     this.stopRingTone();
   }
 
-  tranferCall(){
-      this.transferBnt = !this.transferBnt;
+  tranferCall() {
+    this.transferBnt = !this.transferBnt;
   }
-
+  showPassword() {
+     this.inputPassword.nativeElement.type // document.getElementById("input-password");
+    if (this.inputPassword.nativeElement.type == "password") {
+      this.inputPassword.nativeElement.type = "text";
+      $('.icon-password').removeClass('fa fa-eye-slash').addClass('fa fa-eye');
+    } else {
+      this.inputPassword.nativeElement.type = "password";
+      $('.icon-password').removeClass('fa fa-eye').addClass('fa fa-eye-slash');
+    }
+  }
+  secondsToString(seconds) {
+    this.hour = Math.floor(seconds / 3600);
+    this.hour = (this.hour < 10)? '0' + this.hour : this.hour;
+    this.minute = Math.floor((seconds / 60) % 60);
+    this.minute = (this.minute < 10)? '0' + this.minute : this.minute;
+    this.second = seconds % 60;
+    this.second = (this.second < 10)? '0' + this.second : this.second;
+    return this.hour + ':' + this.minute + ':' + this.second;
+  }
+  
+ 
 
 
 }
+
 
 
 
