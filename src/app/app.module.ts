@@ -8,6 +8,7 @@ import { FormsModule } from '@angular/forms';
 import { LoginComponent } from './components/login/login.component';
 import { ContactComponent } from './components/contact/contact.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { SearchsPipe } from './pipes/searchs.pipe';
 
 
 @NgModule({
@@ -16,6 +17,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
     ViewsComponent,
     LoginComponent,
     ContactComponent,
+    SearchsPipe,
 
   ],
   imports: [

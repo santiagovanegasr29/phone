@@ -18,7 +18,7 @@
                 <input id="impu" name="impu" type="impu" class="form-control" [(ngModel)]="dataform.impu" value=""
                     required placeholder="voip.uxomnitech.com"> -->
                 <!-- <input type="text" id="login" class="fadeIn second" name="login" placeholder="domain"> -->
-                <input type="password" #inputPassword id="input-password"  [(ngModel)]="dataform.password" class="fadeIn third" name="login" placeholder="Password" required>                    
+                <input type="password" #inputPassword id="input-password"  [(ngModel)]="dataform.password" class="fadeIn third" name="login" placeholder="Password" required>
                 <span id="show_password" (click)="showPassword()" class="fa fa-eye-slash fadeIn second icon-password"></span>
 
 
@@ -139,9 +139,10 @@
                                     class="nav-link fa fa-clock-o" data-bs-toggle="tab" type="button"
                                     role="tab">Recent</button>
                             </div>
+                            <input type="text" name="filterSearch" [(ngModel)]="filterSearch" class="form-control product-search" id="input-search" placeholder="Search...">
                         </nav>
                         <div *ngIf="listContacts" class="media-body ml-6 md-6" id="padding_box">
-                            <div class="media" *ngFor="let contact of conta.reverse();"><img
+                            <div class="media" *ngFor="let contact of conta.reverse()|searchs:filterSearch"><img
                                     src="https://www.w3schools.com/w3css/img_avatar2.png" alt="user" width="40"
                                     class="rounded-circle">
 
@@ -182,7 +183,7 @@
                             </div>
                         </div>
                         <div *ngIf="historyCalls" class="media-body ml-6 md-6">
-                            <div class="media" *ngFor="let call of calls.reverse();"><img
+                            <div class="media" *ngFor="let call of calls.reverse()|searchs:filterSearch"><img
                                     src="https://www.w3schools.com/w3css/img_avatar2.png" alt="user" width="40"
                                     class="rounded-circle">
                                 <h2 class="text medias">Number: {{call.call}}</h2>

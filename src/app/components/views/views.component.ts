@@ -131,6 +131,7 @@ export class ViewsComponent implements OnInit {
   hour;
   minute;
   second;
+  filterSearch = '';
 
   constructor(public modalService: NgbModal, private removeClass: ElementRef) {
     this.dataform = new Login();
@@ -420,7 +421,7 @@ export class ViewsComponent implements OnInit {
           break;
         }
       case 'm_permission_accepted': {
-        
+
         //this.statusCalls = "no Answer";
 
       }
@@ -429,7 +430,7 @@ export class ViewsComponent implements OnInit {
 
           //divGlassPanel.style.visibility = 'hidden';
           if (e.type == 'm_permission_refused') {
-            
+
             //uiCallTerminated('Media stream permission denied');
           }
           break;
@@ -484,14 +485,14 @@ export class ViewsComponent implements OnInit {
             }
 
             console.log("<i>" + e.description + "</i>");
-            
+
             if (SIPml.isWebRtc4AllSupported()) {
 
             }
             this.numbers = timer(1000, 1000);
             this.time = this.numbers.subscribe(x => this.callTime = x);
             console.log(this.time);
-            this.secondsToString(this.callTime);  
+            this.secondsToString(this.callTime);
 
           }
           break;
@@ -860,7 +861,7 @@ export class ViewsComponent implements OnInit {
       document.getElementById("microphone").className = "fa fa-microphone-slash";
     }
     document.getElementById("microphone").className = "fa fa-microphone";
-    
+
         this.numberShow = !this.numberShow;
   }
 
@@ -913,8 +914,8 @@ export class ViewsComponent implements OnInit {
     this.second = (this.second < 10)? '0' + this.second : this.second;
     return this.hour + ':' + this.minute + ':' + this.second;
   }
-  
- 
+
+
 
 
 }
