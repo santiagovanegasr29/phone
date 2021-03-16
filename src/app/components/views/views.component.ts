@@ -1,7 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Login } from '../../entities/login';
 import { PhoneNumber } from '../../entities/phoneNumber';
-
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Contact } from 'src/app/entities/contacts';
 import { Observable, timer } from 'rxjs';
@@ -14,7 +13,7 @@ declare let $;
 var db = new Dexie("contact");
 db.version(1).stores({
   contacts: "++id,name,numberPhone",
-  missedcall: "++id,name,call,date,time,status,tipo,callTime",
+  missedcall: "++id,name,call,date,time,img,status,tipo,callTime",
 });
 
 @Component({
@@ -78,12 +77,15 @@ export class ViewsComponent implements OnInit {
   @ViewChild('audio_remote') audio_remote: ElementRef;
   @ViewChild('inputPassword')inputPassword: ElementRef;
   @ViewChild('mute')mute: ElementRef;
+  @ViewChild('inputCall') inputCall:ElementRef;
+  
   audioRemote;
   formContact: Contact;
   formContactEdit: Contact;
   closeResult = '';
   allContacts;
   callAll;
+  imgCalls  = "prueba";
   numberShow = true;
   public conta: any = [];
   public calls: any = [];
@@ -132,6 +134,10 @@ export class ViewsComponent implements OnInit {
   minute;
   second;
   filterSearch = '';
+  missCall;
+  AnswerCall;
+
+ 
 
   constructor(public modalService: NgbModal, private removeClass: ElementRef) {
     this.dataform = new Login();
@@ -147,13 +153,16 @@ export class ViewsComponent implements OnInit {
     this.getHistoryCalls();
     this.ringtone = document.getElementById("ringtone");
     this.ringbacktone = document.getElementById("ringbacktone");
+    
+   
   }
 
   ngAfterViewInit(): void {
+
     //Called after ngAfterContentInit when the component's view has been initialized. Applies to components only.
     //Add 'implements AfterViewInit' to the class.
     $(document).ready(()=> {
-      //CheckBox mostrar contraseña
+          //CheckBox mostrar contraseña
       $('#ShowPassword').click( ()=> {
         $('#Password').attr('type', $(this).is(':checked') ? 'text' : 'password');
       });
@@ -391,6 +400,7 @@ export class ViewsComponent implements OnInit {
             // do not accept the incoming call if we're already 'in call'
             this.recent = "saliente";
             this.statusCalls = "no Answer";
+           // this.imgCalls = "aqui toy perdida";
             this.callTime = 0;
             e.newSession.hangup(); // comment this line for multi-line support
 
@@ -447,10 +457,15 @@ export class ViewsComponent implements OnInit {
       this.loading = false;
       this.statusCalls = "Answer";
       const prueba = document.querySelector('.avatar');
-      console.log(prueba);
+    
       prueba.classList.remove("avatar");
     }
 
+    if (e.type == "i_ao_request") {
+
+       this.statusCalls = "Answer";
+    }
+  
     switch (e.type) {
       case 'connecting': case 'connected':
         {
@@ -781,10 +796,12 @@ export class ViewsComponent implements OnInit {
   }
 
   postHistoryCalls() {
-    db.missedcall.add({ name: this.callName, call: this.incomingcall, date: new Date().toLocaleDateString(), time: new Date().toLocaleTimeString(), tipo: this.recent, status: this.statusCalls, callTime:  this.secondsToString(this.callTime)}).then(() => {
+    
+    db.missedcall.add({ name: this.callName, call: this.incomingcall, date: new Date().toLocaleDateString(), time: new Date().toLocaleTimeString(),img:this.imgCalls , tipo: this.recent, status: this.statusCalls, callTime:  this.secondsToString(this.callTime)}).then(() => {
       return db.missedcall.toArray();
     }).then((missedcall) => {
       console.log("calls: " + JSON.stringify(missedcall));
+      console.log(this.inputCall);
     }).catch((e) => {
       alert("Error: " + (e.stack || e));
     });
@@ -881,6 +898,7 @@ export class ViewsComponent implements OnInit {
     this.listContacts = true;
 
   }
+
   callSlash() {
     this.slash = !this.slash;
   }
@@ -893,6 +911,7 @@ export class ViewsComponent implements OnInit {
   }
 
   tranferCall() {
+   
     this.transferBnt = !this.transferBnt;
   }
   showPassword() {
@@ -914,6 +933,7 @@ export class ViewsComponent implements OnInit {
     this.second = (this.second < 10)? '0' + this.second : this.second;
     return this.hour + ':' + this.minute + ':' + this.second;
   }
+
 
 
 

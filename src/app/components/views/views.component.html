@@ -20,8 +20,6 @@
                 <!-- <input type="text" id="login" class="fadeIn second" name="login" placeholder="domain"> -->
                 <input type="password" #inputPassword id="input-password"  [(ngModel)]="dataform.password" class="fadeIn third" name="login" placeholder="Password" required>
                 <span id="show_password" (click)="showPassword()" class="fa fa-eye-slash fadeIn second icon-password"></span>
-
-
                 <input type="text" class="fadeIn second" placeholder="Display Name" id="display_name"
                     name="display_name" [(ngModel)]="dataform.display_name" required>
                 <!--  <label class="label">Websocket proxy url : </label>
@@ -193,6 +191,9 @@
                                     <p class="text font-italic  text-small">Hora: {{call.time}}</p>
                                 </div>
                                 <div class="medias">
+
+                                <div #inputCall id="p" class="number"></div>
+
                                     <p class="text font-italic  text-small">{{call.tipo}}</p>
                                     <p class="text font-italic  text-small">{{call.status}}</p>
                                 </div>
@@ -236,8 +237,6 @@
                                         <button class="copyNumber btn-dark btn-outline-warning fa fa-copy"
                                             (click)="copy()"> Copy
                                             Number</button>
-
-
                                     </div>
                                     <br>
                                     <div class="options">
@@ -254,8 +253,6 @@
                                                 (click)="callSound();callSlash();"></i></button>
 
                                     </div>
-
-
                                 </div>
                             </div>
                         </div>
@@ -264,7 +261,7 @@
                         <div class="msg_history md-3">
                             <i *ngIf="logout" class="login fa fa-sign-out" (click)='sipUnRegister()'></i>
                             <img class="phoneImg"
-                                src="https://www.flaticon.es/svg/vstatic/svg/3237/3237439.svg?token=exp=1615499706~hmac=0925dad9ee864be935186a23284ca834"
+                                src="https://previews.123rf.com/images/stockgiu/stockgiu1712/stockgiu171214476/92441569-icono-de-tel%C3%A9fono-de-se%C3%B1al-de-llamada-perdida-de-tel%C3%A9fono-de-color-.jpg"
                                 alt="avatar">
                         </div>
                     </div>
