@@ -26,6 +26,7 @@ import { SearchsPipe } from './pipes/searchs.pipe';
     FormsModule,
     NgbModule,
     BrowserAnimationsModule,
+  
 
   ],
   providers: [],

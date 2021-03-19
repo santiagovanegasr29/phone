@@ -6,7 +6,9 @@
     animation-fill-mode: forwards;
 }
 
-
+.w3-sidebar{
+    margin-top:400px;
+}
 
 .numberphone {
     font-size: 20px;
@@ -93,9 +95,6 @@
     width: 80px;
 }
 
-.form-control {
-    text-align: center;
-}
 
 .text-left {
     margin: 40px;
@@ -490,6 +489,10 @@ img {
 
 .mesgs {
     width: 70;
+}
+
+.contact{
+    border: solid 1px;
 }
 
 .contactNumber {
@@ -939,3 +942,12 @@ form {
     color: #b1b0b0;
     font-size: 15px;
   }
+  .thead{
+    background-color:#003649;
+    color: #fff;
+  }
+  .titleContact{
+      margin-left:550px;
+      font-size: 38px;
+  }
+

@@ -77,8 +77,7 @@ export class ViewsComponent implements OnInit {
   @ViewChild('audio_remote') audio_remote: ElementRef;
   @ViewChild('inputPassword')inputPassword: ElementRef;
   @ViewChild('mute')mute: ElementRef;
-  @ViewChild('inputCall') inputCall:ElementRef;
-  
+  inputCall;  
   audioRemote;
   formContact: Contact;
   formContactEdit: Contact;
@@ -137,7 +136,6 @@ export class ViewsComponent implements OnInit {
   missCall;
   AnswerCall;
 
- 
 
   constructor(public modalService: NgbModal, private removeClass: ElementRef) {
     this.dataform = new Login();
@@ -398,6 +396,7 @@ export class ViewsComponent implements OnInit {
 
           if (this.oSipSessionCall) {
             // do not accept the incoming call if we're already 'in call'
+            
             this.recent = "saliente";
             this.statusCalls = "no Answer";
            // this.imgCalls = "aqui toy perdida";
@@ -607,8 +606,6 @@ export class ViewsComponent implements OnInit {
         {
           if (e.session == this.oSipSessionCall) {
             const img = document.querySelector('.avatar');
-            console.log(img);
-            //prueba.classList.remove("avatar");
             this.stopRingbackTone();
             this.stopRingTone();
             console.log('<i>Early media started</i>');
@@ -784,24 +781,32 @@ export class ViewsComponent implements OnInit {
   pressNum(num: string) {
     if (this.numberPhone.phone === "") {
       this.numberPhone.phone = num;
-
     } else {
       this.numberPhone.phone = this.numberPhone.phone + num;
     }
 
   }
-  contactCall(numberCall) {
-    this.numberPhone.phone = '' + numberCall;
+  contactCall(numberCall, name) {
+    this.numberPhone.phone = '' + numberCall;  
+    this.callName = name; 
+    console.log( name);
+    
     this.sipCall('call-audio');
   }
 
   postHistoryCalls() {
-    
-    db.missedcall.add({ name: this.callName, call: this.incomingcall, date: new Date().toLocaleDateString(), time: new Date().toLocaleTimeString(),img:this.imgCalls , tipo: this.recent, status: this.statusCalls, callTime:  this.secondsToString(this.callTime)}).then(() => {
+   
+    db.missedcall.add({ name: this.callName, call: this.incomingcall, date: new Date().toLocaleDateString(), time: new Date().toLocaleTimeString(), tipo: this.recent, status: this.statusCalls, callTime:  this.secondsToString(this.callTime)}).then(() => {
       return db.missedcall.toArray();
     }).then((missedcall) => {
       console.log("calls: " + JSON.stringify(missedcall));
-      console.log(this.inputCall);
+
+     
+      if (this.calls[0].status == "Answer") {
+      
+      }
+    
+
     }).catch((e) => {
       alert("Error: " + (e.stack || e));
     });
@@ -812,6 +817,10 @@ export class ViewsComponent implements OnInit {
     this.callAll.then((value) => {
       this.calls = value;
       console.log(this.calls);
+      
+      console.log(this.calls[0].status);
+      
+      
 
     });
   }
@@ -828,7 +837,6 @@ export class ViewsComponent implements OnInit {
   }
 
   postContacts() {
-
     db.contacts.add({ name: this.formContact.name, numberP: this.formContact.numberPhone }).then(() => {
       return db.contacts.toArray();
     }).then((contact) => {
@@ -870,6 +878,24 @@ export class ViewsComponent implements OnInit {
 
     });
   }
+  editUser(contentEditUser) {
+
+    this.modalService.open(contentEditUser, { ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
+      this.closeResult = `Closed with: ${result}`;
+    }, (reason) => {
+      console.log(contentEditUser);
+      
+    });
+  }
+
+  openPhone(callPhone){
+    this.modalService.open(callPhone, { ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
+      this.closeResult = `Closed with: ${result}`;
+    }, (reason) => {
+      console.log(callPhone);
+      
+    });
+  }
   toggle() {
     this.isOpen = !this.isOpen;
   }
@@ -885,6 +911,10 @@ export class ViewsComponent implements OnInit {
   loadingCall() {
     this.loading = !this.loading;
     this.text = false;
+  }
+  nameUndefined(){
+    
+    this.callName="undefined";
   }
 
 
@@ -933,10 +963,6 @@ export class ViewsComponent implements OnInit {
     this.second = (this.second < 10)? '0' + this.second : this.second;
     return this.hour + ':' + this.minute + ':' + this.second;
   }
-
-
-
-
 
 }
 

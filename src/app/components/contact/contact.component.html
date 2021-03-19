@@ -1,98 +1,315 @@
-<div class="container">
-    <ng-template #contentUser let-modal>
-        <div class="modal-header">
-            <h4 class="modal-title" id="modal-basic-title">Enter Your Information</h4>
-            <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
-      <span aria-hidden="true">&times;</span>
-    </button>
+<div class="layout-wrapper d-lg-flex">
+    <!-- Start left sidebar-menu -->
+    <div class="side-menu flex-lg-column me-lg-1 ms-lg-0">
+        <!-- LOGO -->
+        <div class="navbar-brand-box">
+            <a class="logo logo-dark">
+                <span class="logo-sm">
+                    <img src="assets/img/logo-simbolo.png" alt="" height="30">
+                </span>
+            </a>
+
+            <a href="index.html" class="logo logo-light">
+                <span class="logo-sm">
+                    <img src="images/logo.svg" alt="" height="30">
+                </span>
+            </a>
         </div>
-        <div class="modal-body">
-            <form class="text-left" (ngSubmit)="postContacts();gets();" ngNativeValidate>
-                <br>
-                <label class="label">User : </label>
-                <input id="name" name="name" class="form-control" [(ngModel)]="formContact.name" required placeholder="Name User">
-                <br>
-                <label class="label">Number Phone : </label>
-                <input id="numberPhone" name="numberPhone" type="number" class="form-control" [(ngModel)]="formContact.numberPhone" required placeholder="Number Phone">
-                <br>
-                <button type="submit" class="btn btn-primary">Add User</button>
-                <br>
-            </form>
+        <!-- end navbar-brand-box -->
+
+        <!-- Start side-menu nav -->
+        <div class="flex-lg-column my-auto">
+            <ul class="nav nav-pills side-menu-nav justify-content-center" role="tablist">
+                <li class="nav-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Chats">
+                    <a class="nav-link active" id="pills-chat-tab" data-bs-toggle="pill" href="#pills-chat" role="tab">
+                        <i class="ri-contacts-line"></i>                            
+                    </a>
+                </li>
+                
+            </ul>
         </div>
-    </ng-template>
-
-    <ng-template #contentListUser let-modal>
-        <div class="modal-header">
-            <h4 class="modal-title" id="modal-basic-title">Enter Your Information</h4>
-            <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
-      <span aria-hidden="true">&times;</span>
-    </button>
-        </div>
-        <div class="modal-body">
-
-        </div>
-    </ng-template>
-</div>
+        <!-- end side-menu nav -->
 
 
+    </div>
+    <!-- end left sidebar-menu -->
 
-<div class="container">
-    <div class="messaging">
-        <div class="inbox_msg">
-            <div class="inbox_people">
-                <div class="headind_srch">
-                    <div class="recent_heading">
-                        <div class="bg-gray px-6 py-2 bg-light">
-                            <p class="h5 mb-0 py-1">Recent</p><i class="fa fa-user-plus" (click)='openUser(contentUser)'></i>
-                        </div>
-                    </div>
-                    <div class="srch_bar">
-                        <div class="stylish-input-group">
-                            <input type="text" class="search-bar" placeholder="Search">
-                            <span class="input-group-addon">
-                      <button type="button"> <i class="fa fa-search" aria-hidden="true"></i> </button>
-                      </span> </div>
-                    </div>
-                </div>
-                <div class="inbox_chat">
-                    <div class="media" *ngFor="let contact of conta"><img src="https://www.w3schools.com/w3css/img_avatar2.png" alt="user" width="50" class="rounded-circle">
-                        <div class="media-body ml-4">
-                            <div class="d-flex align-items-center justify-content-between mb-1">
-                                <h6 class="mb-0">{{contact.name}}</h6>
+    <!-- start chat-leftsidebar -->
+    <div class="chat-leftsidebar me-lg-1 ms-lg-0">
+
+        <div class="tab-content">
+            
+
+            <!-- Historial -->
+
+            <!-- Start chats tab-pane -->
+            <div class="tab-pane fade show active" id="pills-chat" role="tabpanel" aria-labelledby="pills-chat-tab">
+                <!-- Start chats content -->
+                <div>
+                    <div class="px-4 pt-4">
+                        
+
+                        <div class="user-chat-nav float-end">
+                            <div data-bs-toggle="tooltip" data-bs-placement="bottom" title="Add Contact">
+                                <!-- Button trigger modal -->
+                                <button type="button" class="btn nav-btn" data-bs-toggle="modal" data-bs-target="#addContact-exampleModal">
+                                    <i class="ri-user-add-line"></i>
+                                </button>
+                                <button type="button" class="btn nav-btn" data-bs-toggle="modal" data-bs-target="#audiocallModal">
+                                    <i class="ri-phone-line"></i>
+                                </button>
                             </div>
-                            <p class="font-italic mb-0 text-small">Number: {{contact.numberP}}</p>
-                            <i class="delete fa fa-trash fa-2x" (click)='deleteContact(contact.id);gets()'></i>
                         </div>
+                        <h4 class="mb-4">Contacts</h4>                                
 
+                        <!-- Start Add contact Modal -->
+                        <div class="modal fade" id="addContact-exampleModal" tabindex="-1" role="dialog" aria-labelledby="addContact-exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title font-size-16" id="addContact-exampleModalLabel">Add Contact</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                                        </button>
+                                    </div>
+                                    <div class="modal-body p-4">
+                                        <form>
+                                            <div class="mb-3">
+                                                <label for="addcontactemail-input" class="form-label">Name</label>
+                                                <input type="text" class="form-control" id="" placeholder="Enter Name">
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="addcontactemail-input" class="form-label">Number</label>
+                                                <input type="text" class="form-control" id="" placeholder="Enter Number">
+                                            </div>
+                                        </form>
+                                    </div> 
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-link" data-bs-dismiss="modal">Close</button>
+                                        <button type="button" class="btn btn-primary">Save</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- End Add contact Modal -->
 
-                    </div>
+                        <div class="search-box chat-search-box">            
+                            <div class="input-group mb-4 rounded-3">
+                                <span class="input-group-text text-muted bg-light pe-1 ps-3" id="basic-addon1">
+                                    <i class="ri-search-line search-icon font-size-18"></i>
+                                </span>
+                                <input type="text" class="form-control bg-light" placeholder="Search contacts..." aria-label="Search messages or users" aria-describedby="basic-addon1">
+                            </div> 
+                        </div> <!-- Search Box-->
+                    </div> <!-- .p-4 -->  
+                    
+                    <!-- Start contact lists -->
+                 <div class="p-4 contact-list" data-simplebar>
+                               
+                    <ul class="list-unstyled contact-list">
+                        <li>
+                            <div class="d-flex align-items-center">
+                                <div class="flex-1">
+                                    <h5 class="font-size-14 m-0">Martin Robbins</h5>
+                                    <span class="font-size-14 m-0">+15603986</span>
+                                </div>
+                                <div class="dropdown">
+                                    <a href="#" class="text-muted dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <i class="ri-more-2-fill"></i>
+                                    </a>
+                                    <div class="dropdown-menu dropdown-menu-end">
+                                        <a class="dropdown-item" href="#">Remove <i class="ri-delete-bin-line float-end text-muted"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="d-flex align-items-center">
+                                <div class="flex-1">
+                                    <h5 class="font-size-14 m-0">Martin Robbins</h5>
+                                    <span class="font-size-14 m-0">+15603986</span>
+                                </div>
+                                <div class="dropdown">
+                                    <a href="#" class="text-muted dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <i class="ri-more-2-fill"></i>
+                                    </a>
+                                    <div class="dropdown-menu dropdown-menu-end">
+                                        <a class="dropdown-item" href="#">Remove <i class="ri-delete-bin-line float-end text-muted"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>                                              
                 </div>
+            <!-- end contact lists -->
+
+                </div>
+
+                 
+                <!-- Start chats content -->
             </div>
-            <div class="mesgs">
-                <div class="msg_history">
-                    <div class="incoming_msg">
-                        <div class="incoming_msg_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
-                        <div class="received_msg">
-                            <div class="received_withd_msg">
-                                <p>Lorem ipsum dolor sit am
-                                </p>
-                                <span class="time_date"> 11:01 AM    |    June 9</span></div>
+            <!-- End chats tab-pane -->
+            
+                              
+            
+           
+        </div>
+        <!-- end tab content -->
+
+    </div>
+    <!-- end chat-leftsidebar -->
+
+    <!-- Start User chat -->
+    <div class="user-chat w-100 overflow-hidden">
+        <div class="d-lg-flex">
+
+            <!-- start chat conversation section -->
+            <div class="w-100 overflow-hidden position-relative">
+                <div class="p-3 p-lg-4 border-bottom">
+                    <div class="row align-items-center">
+                        <div class="col-sm-4 col-8">
+                        </div>
+                        <div class="col-sm-8 col-4">
+                            <ul class="list-inline user-chat-nav text-end mb-0">                                        
+                                    
+                                <li class="list-inline-item">
+                                    <div class="dropdown">
+                                        <button class="btn nav-btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <i class="ri-more-fill"></i>
+                                        </button>
+                                        <div class="dropdown-menu dropdown-menu-end"> <a class="dropdown-item" href="#">Log out <i class="ri-logout-circle-r-line float-end text-muted"></i></a>
+                                        </div>
+                                    </div>
+                                </li>                                        
+                            </ul>                                    
                         </div>
                     </div>
-                    <div class="outgoing_msg">
-                        <div class="sent_msg">
-                            <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Sequi aut iusto nulla, consequatur, quam magni iure reiciendis error, eos eum quo! Alias natus rem omnis molestias odit commodi impedit sapiente?
-                            </p>
-                            <span class="time_date"> 11:01 AM    |    June 9</span> </div>
-                    </div>
                 </div>
-                <div class="type_msg">
-                    <div class="input_msg_write">
-                        <input type="text" class="write_msg" placeholder="Type a message" />
-                        <button class="msg_send_btn" type="button"><i class="fa fa-paper-plane-o" aria-hidden="true"></i></button>
-                    </div>
+                <!-- end chat user head -->
+
+                <!-- start chat conversation -->
+                <div class="chat-conversation p-3 p-lg-4" data-simplebar="init">
+
+                    <table class="table table-hover">
+                        <thead>
+                          <tr>
+                            <th scope="col">Date</th>
+                            <th scope="col">Time</th>
+                            <th scope="col">Caller</th>
+                            <th scope="col">Result</th>
+                            <th scope="col">Connected to</th>
+                            <th scope="col">Duration</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td>8/1/2018</td>
+                            <td>8:17 am</td>
+                            <td>+15017912904</td>
+                            <td><i class="ri-phone-fill"></i></td>
+                            <td>Otto Mark</td>
+                            <td>00:50</td>
+                          </tr>
+                          <tr>
+                            <td>8/1/2018</td>
+                            <td>8:17 am</td>
+                            <td>+15017912904</td>
+                            <td><i class="ri-phone-fill"></i></td>
+                            <td>Otto Mark</td>
+                            <td>00:50</td>
+                          </tr>
+                          <tr>
+                            <td>8/1/2018</td>
+                            <td>8:17 am</td>
+                            <td>+15017912904</td>
+                            <td><i class="ri-phone-fill"></i></td>
+                            <td>Otto Mark</td>
+                            <td>00:50</td>
+                          </tr>
+                        </tbody>
+                      </table>
+
                 </div>
+                <!-- end chat conversation end -->
+
+                <!-- Panel Central -->
+                  
+            </div>
+            <!-- end chat conversation section -->
+
+
+        </div>
+    </div>
+    <!-- End User chat -->
+
+    <!-- audiocall Modal -->
+    <div class="modal fade" id="audiocallModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" style="max-width: 420px;">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="text-center p-4">
+                        
+                            <i class="ri-phone-fill" style="font-size: 100px"></i>                                                            
+                                
+                        <form>
+                          <div class="text-center">
+
+                            <div>         
+                                <button class="btn btn-success avatar-sm rounded-circle m-1" >1</button>      
+                                <button class="btn btn-success avatar-sm rounded-circle m-1" >2</button>      
+                                <button class="btn btn-success avatar-sm rounded-circle m-1" >3</button>            
+                            </div>
+                            
+                            <div>         
+                              <button class="btn btn-success avatar-sm rounded-circle m-1">4</button>      
+                              <button class="btn btn-success avatar-sm rounded-circle m-1">5</button>      
+                              <button class="btn btn-success avatar-sm rounded-circle m-1">6</button>            
+                            </div>
+                    
+                            <div>         
+                              <button class="btn btn-success avatar-sm rounded-circle m-1">7</button>      
+                              <button class="btn btn-success avatar-sm rounded-circle m-1">8</button>      
+                              <button class="btn btn-success avatar-sm rounded-circle m-1">9</button>            
+                            </div>
+                    
+                            <div>             
+                              <button class="btn btn-success avatar-sm rounded-circle m-1">0</button>            
+                            </div>
+                    
+                            
+                         
+                          </div>
+                          <input type="text" class="form-control mt-4 m-auto" style="width: 300px;" id="" placeholder="Enter Number">
+
+                        </form>
+
+
+                        <div class="mt-4">
+                            <ul class="list-inline mb-1">
+                                <li class="list-inline-item px-2 me-2 ms-0">
+                                    <button type="button" class="btn btn-danger avatar-sm rounded-circle" data-bs-dismiss="modal">
+                                        <span class="avatar-title bg-transparent font-size-20">
+                                            <i class="ri-close-fill"></i>
+                                        </span>
+                                    </button>
+                                </li>
+                                <li class="list-inline-item px-2">
+                                    <button type="button" class="btn btn-success avatar-sm rounded-circle">
+                                        <span class="avatar-title bg-transparent font-size-20">
+                                            <i class="ri-phone-fill"></i>
+                                        </span>
+                                    </button>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>                        
             </div>
         </div>
     </div>
+    <!-- audiocall Modal -->
+
+    
 </div>
+<!-- end  layout wrapper -->
+
+
