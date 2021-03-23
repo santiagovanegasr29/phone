@@ -1,3 +1,7 @@
+@import "../../../assets/css/bootstrap.min.css";
+@import "../../../assets/css/icons.min.css";
+@import "../../../assets/css/app.min.css";
+
 .label {
     display: inline-block;
     width: 70px;
@@ -59,11 +63,7 @@
     font: oblique bold 280% cursive;
 }
 
-.logoP {
-    font: oblique bold 400% cursive;
-    display: flex;
-    margin: 5px;
-}
+
 
 .contacts {
     margin: auto;
@@ -271,11 +271,11 @@ img {
 }
 
 .load {
-    margin: 350px;
-    margin-left: 700px;
+    
     width: 60px;
     height: 60px;
 }
+
 
 .sent_msg p {
     background: #69b2e2 none repeat scroll 0 0;
@@ -331,11 +331,8 @@ img {
 }
 
 .msg_history {
-    height: 800px;
-    width: 1300px;
-    overflow-y: auto;
-    overflow-x: auto;
-
+   
+    
 }
 
 .btnlogin {
@@ -950,4 +947,6 @@ form {
       margin-left:550px;
       font-size: 38px;
   }
+
+
 

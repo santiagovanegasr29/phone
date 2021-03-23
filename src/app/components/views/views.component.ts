@@ -5,6 +5,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Contact } from 'src/app/entities/contacts';
 import { Observable, timer } from 'rxjs';
 import { trigger, state, style, animate, transition } from '@angular/animations';
+import{ NgxSpinnerService} from 'ngx-spinner';
 
 declare let SIPml;
 declare let Dexie;
@@ -67,6 +68,20 @@ db.version(1).stores({
       ]),
       transition('closed => open', [
         animate('1s')
+      ]),
+    ]),
+    trigger('phoneAnimation', [
+      state('open', style({
+        opacity: 1,
+      })),
+      state('closed', style({
+        opacity: 0.5,
+      })),
+      transition('open => closed', [
+        animate('0.01s')
+      ]),
+      transition('closed => open', [
+        animate('0.01s')
       ]),
     ]),
   ]
@@ -133,11 +148,14 @@ export class ViewsComponent implements OnInit {
   minute;
   second;
   filterSearch = '';
+  filterSearchHistory='';
   missCall;
   AnswerCall;
+  optionSelect:string ='0';
+  viewSelection:string = '';
 
 
-  constructor(public modalService: NgbModal, private removeClass: ElementRef) {
+  constructor(public modalService: NgbModal, private removeClass: ElementRef, private spinnerService:NgxSpinnerService) {
     this.dataform = new Login();
     this.numberPhone = new PhoneNumber();
     this.formContact = new Contact();
@@ -151,8 +169,7 @@ export class ViewsComponent implements OnInit {
     this.getHistoryCalls();
     this.ringtone = document.getElementById("ringtone");
     this.ringbacktone = document.getElementById("ringbacktone");
-    
-   
+       
   }
 
   ngAfterViewInit(): void {
@@ -165,6 +182,17 @@ export class ViewsComponent implements OnInit {
         $('#Password').attr('type', $(this).is(':checked') ? 'text' : 'password');
       });
     });
+
+    
+  }
+  capture() {
+    this.viewSelection = this.optionSelect;
+    console.log(this.viewSelection);
+    
+}
+  spinner(): void{
+    this.spinnerService.show();
+    //detener this.spinnerService.hide();
   }
 
   open(content) {
@@ -409,6 +437,7 @@ export class ViewsComponent implements OnInit {
             // start listening for events
             this.oSipSessionCall.setConfiguration(this.oConfigCall);
             this.calling = true;
+            this.spinnerService.hide();
             this.loading = false;
             this.startRingTone();
             var sRemoteNumber = (this.oSipSessionCall.getRemoteFriendlyName() || 'unknown');
@@ -495,6 +524,7 @@ export class ViewsComponent implements OnInit {
 
               this.incomingcall = this.numberPhone.phone;
               this.loading = false;
+              
 
             }
 
@@ -590,6 +620,7 @@ export class ViewsComponent implements OnInit {
             var iSipResponseCode = e.getSipResponseCode();
             if (iSipResponseCode == 180 || iSipResponseCode == 183) {
               this.calling = true;
+              this.spinnerService.hide();
               this.text = false;
               this.loading = false;
               this.startRingbackTone();
@@ -786,12 +817,12 @@ export class ViewsComponent implements OnInit {
     }
 
   }
-  contactCall(numberCall, name) {
-    this.numberPhone.phone = '' + numberCall;  
-    this.callName = name; 
-    console.log( name);
-    
+  contactCall(contact) {
+    this.numberPhone.phone = '' + contact.numberP;  
+    this.callName = contact.name; 
+    console.log( contact.name);
     this.sipCall('call-audio');
+    this.loadingCall();
   }
 
   postHistoryCalls() {
@@ -800,13 +831,7 @@ export class ViewsComponent implements OnInit {
       return db.missedcall.toArray();
     }).then((missedcall) => {
       console.log("calls: " + JSON.stringify(missedcall));
-
-     
-      if (this.calls[0].status == "Answer") {
-      
-      }
     
-
     }).catch((e) => {
       alert("Error: " + (e.stack || e));
     });
@@ -865,9 +890,11 @@ export class ViewsComponent implements OnInit {
 
 
   }
-  deleteContact(id) {
+  deleteContact(contact) {
 
-    db.contacts.delete(id);
+    db.contacts.delete(contact.id);
+
+    this.getContacts();
   }
 
   openUser(contentUser) {
@@ -884,6 +911,7 @@ export class ViewsComponent implements OnInit {
       this.closeResult = `Closed with: ${result}`;
     }, (reason) => {
       console.log(contentEditUser);
+      this.getContacts();
       
     });
   }
@@ -910,7 +938,7 @@ export class ViewsComponent implements OnInit {
 
   loadingCall() {
     this.loading = !this.loading;
-    this.text = false;
+    
   }
   nameUndefined(){
     
