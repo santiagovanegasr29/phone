@@ -38,15 +38,12 @@
         </div>
     </div>
 
-    <div class="layout-wrapper d-lg-flex">
+    <div  *ngIf="logout" class="layout-wrapper d-lg-flex">
          <!-- start chat-leftsidebar -->
         <div class="chat-leftsidebar me-lg-1 ms-lg-0">
-
             <div class="tab-content">
 
-
                 <!-- Historial -->
-
                 <!-- Start chats tab-pane -->
                 <div class="tab-pane fade show active" id="pills-chat" role="tabpanel" aria-labelledby="pills-chat-tab">
                     <!-- Start chats content -->
@@ -83,23 +80,29 @@
                                         </div>
                                         <div class="modal-body p-4">
 
-                                            <form class="text-left"
+                                            <form 
                                                 (ngSubmit)="postContacts();getContacts()"
                                                 ngNativeValidate>
-                                                <br>
+                                               
                                                 <label class="label">User : </label>
-                                                <input id="name" name="name" class="form-control"
+                                                <input id="name" name="name" 
                                                     [(ngModel)]="formContact.name" required placeholder="Name User">
                                                 <br>
+                                                <br>
+                                                
                                                 <label class="label">Number Phone : </label>
                                                 <input id="numberPhone" name="numberPhone" type="number"
-                                                    class="form-control" [(ngModel)]="formContact.numberPhone" required
+                                                     [(ngModel)]="formContact.numberPhone" required
                                                     placeholder="Number Phone">
                                                 <br>
-                                                <button type="submit" class="btn btn-primary" >save</button>
+                                                <br>
+                                                <br>
+                                                <div class="modal-footer">
+                                                <button type="submit" class="createUser btn btn-primary" >save</button>
                                                 <button type="button" class="btn btn-link"
                                                 data-bs-dismiss="modal">Close</button>
                                                 <br>
+                                                </div>
                                             </form>
                                          
                                         </div>
@@ -129,16 +132,16 @@
                                             <h5 class="font-size-14 m-0">{{contact.name}}</h5>
                                             <span class="font-size-14 m-0">{{contact.numberP}}</span>
                                         </div>
-                                        <div class="">
-                                            <select  [(ngModel)]="optionSelect" (change)="capture()" class="ri-more-2-fill"   role="group" >
-                                               <!--  <button class="btn dropdown-toggle-split" ></button> -->
-                                                <!-- <div class="dropdown-menu" > -->
-                                                  <option class="" name="" value="remove"  (click)='deleteContact(contact)'>Remove</option>
-                                                  <option class="" name="" value="edit"  (click)='editUser(contentEditUser)'>Edit</option>
-                                                  <option class="" name="" value="call"  (click)="contactCall(contact)">Call</option>                                            
-                                                <!-- </div> -->
-                                            </select>
-                                        </div>
+                                    <div class="dropdown" ngbDropdown container="body">
+                                            <button class="btn btn-outline-primary btn-sm" ngbDropdownToggle><i class="ri-more-2-fill"></i></button>
+                                            <div ngbDropdownMenu>
+                                              <button ngbDropdownItem (click)='editUser(contentEditUser)'>Edit   <i class="fa fa-edit"></i></button>
+                                              <button ngbDropdownItem (click)='deleteContact(contact)'>Delete   <i class="fa fa-trash"></i></button>
+                                              <button ngbDropdownItem id="sipCall2"
+                                              (click)="contactCall(contact);spinner()">Call <i class="fa fa-phone"></i></button>
+                                              
+                                            </div>
+                                          </div>
 
                                     </div>
                                 
@@ -147,7 +150,7 @@
                                     <div class="modal-header">
                                         <h4 class="modal-title" id="modal-basic-title">Enter Your Information
                                         </h4>
-                                        <button type="button" class="close" aria-label="Close"
+                                        <button type="button" class="modalClose"
                                             (click)="modal.dismiss('Cross click')">
                                             <span aria-hidden="true">&times;</span>
                                         </button>
@@ -158,14 +161,17 @@
                                             (ngSubmit)="updateContact(contact.id,contact.name,contact.numberP);getContacts();modal.dismiss('Cross click')"
                                             ngNativeValidate>
                                             <label class="label">User : </label>
-                                            <input id="name" name="name" class="form-control"
+                                            <input id="name" name="name" 
                                                 [(ngModel)]="contact.name" required>
                                             <br>
                                             <label class="label">Number Phone : </label>
                                             <input id="numberPhone" name="numberPhone" type="number"
-                                                class="form-control" [(ngModel)]="contact.numberP" required>
+                                               [(ngModel)]="contact.numberP" required>
                                             <br>
+                                            <div class="modal-footer">
                                             <button type="submit" class="btn btn-primary">Edit User</button>
+                                            <button  (click)="modal.dismiss('Cross click')" class="btn btn-link">close</button>
+                                        </div>
                                         </form>
                                     </div>
                                 </ng-template>
@@ -181,19 +187,12 @@
                     <!-- Start chats content -->
                 </div>
                 <!-- End chats tab-pane -->
-
-
-
-
             </div>
             <!-- end tab content -->
-
         </div>
         <!-- end chat-leftsidebar -->
-
         <!-- Start User chat -->
         <div class="user-chat w-100 overflow-hidden">
-
             <div class="msg_history llamada md-8" *ngIf="calling">
                 <!--*ngIf="calling"-->
                 <div class="col-md-6">
@@ -245,8 +244,7 @@
                 type="ball-scale-multiple"
               >
                 <p style="font-size: 30px; color: white">Loading...</p>
-              </ngx-spinner>
-                
+              </ngx-spinner>       
                 <!-- start chat conversation section -->
                <div  *ngIf="text" class="w-100 overflow-hidden position-relative">
                     <div class="p-3 p-lg-4 border-bottom">
@@ -256,19 +254,15 @@
                             <div class="col-sm-8 col-4">
                                 <p class="titleContact fas fa-history" center>Recent</p>
                                 <ul class="list-inline user-chat-nav text-end mb-0">
-                                    
-
                                     <li class="list-inline-item">
-                                        <div class="dropdown">
-                                            <button class="btn nav-btn dropdown-toggle" type="button"
-                                                data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                <i class="ri-more-fill"></i>
-                                            </button>
-                                            <div class="dropdown-menu dropdown-menu-end"> <a class="dropdown-item"
-                                                    href="#">Log out <i
-                                                        class="ri-logout-circle-r-line float-end text-muted"></i></a>
+                                       
+                                        <div class="dropdown" ngbDropdown container="body">
+                                            <button class="btn btn-outline-primary btn-sm" ngbDropdownToggle><i class="ri-more-2-fill"></i></button>
+                                            <div ngbDropdownMenu>
+                                              <button ngbDropdownItem (click)='sipUnRegister()'>Log out   <i class="delete fas fa-sign-out-alt"></i>
+                                                </button>                                              
                                             </div>
-                                        </div>
+                                          </div>
                                     </li>
                                 </ul>
                             </div>
@@ -398,278 +392,7 @@
 
     </div>
     <!-- end  layout wrapper -->
-    <div *ngIf="logout">
-
-
-        <div class="UserContact">
-            <ng-template #contentUser let-modal>
-                <div class="modal-header">
-                    <h4 class="modal-title" id="modal-basic-title">Enter Your Information</h4>
-                    <button type="button" class="close" aria-label="Close" data-dismiss="modal"
-                        (click)="modal.dismiss('Cross click')">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form class="text-left" (ngSubmit)="postContacts();getContacts();modal.dismiss('Cross click')"
-                        ngNativeValidate>
-                        <br>
-                        <label class="label">User : </label>
-                        <input id="name" name="name" class="form-control" [(ngModel)]="formContact.name" required
-                            placeholder="Name User">
-                        <br>
-                        <label class="label">Number Phone : </label>
-                        <input id="numberPhone" name="numberPhone" type="number" class="form-control"
-                            [(ngModel)]="formContact.numberPhone" required placeholder="Number Phone">
-                        <br>
-                        <button type="submit" class="btn btn-primary">Add User</button>
-                        <br>
-                    </form>
-                </div>
-            </ng-template>
-        </div>
-        <div class="w3-sidebar w3-bar-block w3-transparent w3-xxlarge" style="width:70px">
-            <a href="#" class="w3-bar-item w3-button"><i class="fa fa-home"></i></a>
-            <a href="#" class="w3-bar-item w3-button" (click)="listContact()"><i class="fa fa-user"></i></a>
-            <a href="#" class="w3-bar-item w3-button" (click)="historyCall()"><i class="fa fa-history"></i></a>
-            <a href="#" class="w3-bar-item w3-button" (click)="openPhone(callPhone)"><i
-                    class="fas fa-phone-square"></i></a>
-            <a class="w3-bar-item w3-button"><i class="fa fa-sign-out-alt" style="color: red"
-                    (click)='sipUnRegister()'></i></a>
-            <ng-template #callPhone let-modal>
-                <div class="modal-header">
-                    <h4 class="modal-title" id="modal-basic-title">please dial phone number</h4>
-
-                </div>
-                <div class="modal-body">
-                    <div class="srch_bar" ngNativeValidate>
-
-                        <i class="numberPhones fa fa-th md-6" [@numbersAnimation]="isOpen ? 'open' : 'closed'"
-                            (click)='toggle();'></i>
-                        <input for="number" id="numberphone" name="number" type="tel" class="numberphone form-control"
-                            required placeholder="Phone" [(ngModel)]="numberPhone.phone">
-                        <br>
-                        <i class="number fa fa-phone" id="sipCall2"
-                            (click)="loadingCall();sipCall('call-audio');modal.dismiss('Cross click')"></i>
-                        <i class="hangUpCall fa fa-phone" (click)="sipHangUp();modal.dismiss('Cross click')"></i>
-                        <div class="dos" [@animation1]="isOpen ? 'open' : 'closed'">
-                            <br>
-                            <button class="btn btn-lg btn-outline-secondary col-sm-4 p-1" type="button"
-                                (click)="pressNum('1')">1</button>
-                            <button class="btn btn-lg btn-outline-secondary col-sm-4 p-1" type="button"
-                                (click)="pressNum('2')">2</button>
-                            <button class="btn btn-lg btn-outline-secondary col-sm-4 p-1" type="button"
-                                (click)="pressNum('3')">3</button>
-                            <br>
-                            <button class="btn btn-lg btn-outline-secondary col-sm-4 p-1" type="button"
-                                (click)="pressNum('4')">4</button>
-                            <button class="btn btn-lg btn-outline-secondary col-sm-4 p-1" type="button"
-                                (click)="pressNum('5')">5</button>
-                            <button class="btn btn-lg btn-outline-secondary col-sm-4 p-1" type="button"
-                                (click)="pressNum('6')">6</button>
-                            <br>
-                            <button class="btn btn-lg btn-outline-secondary col-sm-4 p-1" type="button"
-                                (click)="pressNum('7')">7</button>
-                            <button class="btn btn-lg btn-outline-secondary col-sm-4 p-1" type="button"
-                                (click)="pressNum('8')">8</button>
-                            <button class="btn btn-lg btn-outline-secondary col-sm-4 p-1" type="button"
-                                (click)="pressNum('9')">9</button>
-                            <br>
-                            <button class="btn btn-lg btn-outline-secondary col-sm-4 p-1" type="button"
-                                (click)="pressNum('*')">*</button>
-                            <button class="btn btn-lg btn-outline-secondary col-sm-4 p-1" type="button"
-                                (click)="pressNum('0')">0</button>
-                            <button class="btn btn-lg btn-outline-secondary col-sm-4 p-1" type="button"
-                                (click)="pressNum('#')">#</button>
-
-                        </div>
-                    </div>
-
-                </div>
-            </ng-template>
-        </div>
-
-        <div class="messaging  md-10">
-            <div class="inbox_msg">
-                <div class="inbox_people">
-                    <div class="headind_srch  md-9">
-                        <div class="recent_heading">
-                            <div class="logoP">
-                                <img src="assets/img/logo.png"><label
-                                    class="name">{{this.dataform.display_name}}</label>
-                            </div>
-                            <div class="con bg-gray px-2 py-2 bg-light">
-                                <i class="contactAdd fa fa-user-plus" (click)='openUser(contentUser)'></i>
-
-
-                            </div>
-                        </div>
-                        <br><br>
-
-
-
-                    </div>
-
-                </div>
-                <div class="mesgs">
-                    <!-- <div class="msg_history llamada md-8" *ngIf="calling">
-                        <div class="col-md-6">
-                            <div class="inside">
-                                <div class="panel">
-                                    <div class="participant">
-                                        <img id="avatar" class="avatar avatarP"
-                                            src="https://www.w3schools.com/w3css/img_avatar3.png" alt="avatar">
-                                        <br>
-                                        <label class="callname">{{callName}} </label>
-                                        <br>
-                                        <input class="entrante" type="text" value="{{incomingcall}} " name=""
-                                            id="entrante" disabled>
-
-                                        <label class="callTime">{{this.secondsToString(this.callTime)}}</label>
-                                        <br>
-                                        <div class="card" *ngIf="transferBnt">
-                                            <input #numberTransfer placeholder="number transfer" class="btnTransfer"
-                                                type="text">
-                                            <input type="submit" value="Transfer" (click)="sipTransfer()">
-                                        </div>
-                                        <button class="copyNumber btn-dark btn-outline-warning fa fa-copy"
-                                            (click)="copy()"> Copy
-                                            Number</button>
-                                    </div>
-                                    <br>
-                                    <div class="options">
-                                        <button class="microphone btn option"><i
-                                                [@muteAnimation]="numberShow ? 'open' : 'close'"
-                                                class="fa fa-microphone" id="microphone"
-                                                (click)="sipToggleMute();showNumbers();"></i></button>
-
-                                        <i class="number fa fa-phone md-30" (click)="sipCall('call-audio')"></i>
-                                        <i class="hangUpCall  fa fa-phone md-30" (click)="sipHangUp()"></i>
-                                        <input type="button" class="btn btn-success" id="btnTransfer" value="Transfer"
-                                            (click)="tranferCall()" />
-                                        <button *ngIf="slash" class="bell btn option"><i class="fa fa-bell-slash"
-                                                (click)="callSound();callSlash();"></i></button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div> -->
-                    <div *ngIf="text">
-                        <div class="msg_history md-3">
-                            <div *ngIf="listContacts" class="media-body ml-6 md-6" id="padding_box">
-                                <i class="con contactAdd fa fa-user-plus" (click)='openUser(contentUser)'></i>
-
-                                <p class="titleContact fas fa-user">Contacts</p>
-
-                                <input type="text" name="filterSearch" [(ngModel)]="filterSearch"
-                                    class="form-control product-search" id="input-search" placeholder="Search...">
-                                <table class="table">
-                                    <thead class="thead">
-                                        <tr>
-                                            <th></th>
-                                            <th scope="col">#</th>
-                                            <th scope="col">Name</th>
-                                            <th scope="col">Number</th>
-                                            <th scope="col">Call</th>
-                                            <th scope="col">Delete</th>
-                                            <th scope="col">Edit</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody *ngFor="let contact of conta.reverse()|searchs:filterSearch; index as i;">
-                                        <tr>
-                                            <img src="https://www.w3schools.com/w3css/img_avatar2.png" alt="user"
-                                                width="40" class="rounded-circle">
-                                            <th scope="row">{{i+1}}</th>
-                                            <td>{{contact.name}}</td>
-                                            <td>{{contact.numberP}}</td>
-                                            <td> <i class="number fa fa-phone" id="sipCall2"
-                                                    (click)="contactCall(contact.numberP,contact.name);loadingCall();"></i>
-                                            </td>
-                                            <td><i class="delete md-6 fa fa-trash fa-2x"
-                                                    (click)='deleteContact(contact.id);getContacts()'></i></td>
-                                            <td><i class="edit fa fa-edit fa-2x"
-                                                    (click)='editUser(contentEditUser);getContacts()'></i></td>
-                                        </tr>
-                                        <ng-template #contentEditUser let-modal>
-                                            <div class="modal-header">
-                                                <h4 class="modal-title" id="modal-basic-title">Enter Your Information
-                                                </h4>
-                                                <button type="button" class="close" aria-label="Close"
-                                                    (click)="modal.dismiss('Cross click')">
-                                                    <span aria-hidden="true">&times;</span>
-                                                </button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <br>
-                                                <form class="text-left"
-                                                    (ngSubmit)="updateContact(contact.id,contact.name,contact.numberP);getContacts();modal.dismiss('Cross click')"
-                                                    ngNativeValidate>
-                                                    <label class="label">User : </label>
-                                                    <input id="name" name="name" class="form-control"
-                                                        [(ngModel)]="contact.name" required>
-                                                    <br>
-                                                    <label class="label">Number Phone : </label>
-                                                    <input id="numberPhone" name="numberPhone" type="number"
-                                                        class="form-control" [(ngModel)]="contact.numberP" required>
-                                                    <br>
-                                                    <button type="submit" class="btn btn-primary">Edit User</button>
-                                                </form>
-                                            </div>
-                                        </ng-template>
-                                    </tbody>
-                                </table>
-
-                                <div *ngFor="let contact of conta.reverse()|searchs:filterSearch">
-
-
-                                </div>
-                            </div>
-
-                            <div *ngIf="historyCalls" class="media-body ml-6 md-6">
-                                <p class="titleContact fas fa-history">Recent</p>
-                                <input type="text" name="filterSearch" [(ngModel)]="filterSearch"
-                                    class="form-control product-search" id="input-search" placeholder="Search...">
-                                <table class="table">
-                                    <thead class="thead">
-                                        <tr>
-                                            <th></th>
-                                            <th scope="col">#</th>
-                                            <th scope="col">Number</th>
-                                            <th scope="col">Name</th>
-                                            <th scope="col">Timer</th>
-                                            <th scope="col">Date</th>
-                                            <th scope="col">Hours</th>
-                                            <th scope="col">Type</th>
-                                            <th scope="col">Status</th>
-                                            <th scope="col">Delete</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody *ngFor="let call of calls.reverse()|searchs:filterSearch; index as i;">
-                                        <tr>
-                                            <img src="https://www.w3schools.com/w3css/img_avatar2.png" alt="user"
-                                                width="40" class="rounded-circle">
-                                            <th scope="row">{{i+1}}</th>
-                                            <td>{{call.call}}</td>
-                                            <td>{{call.name}}</td>
-                                            <td>{{call.callTime}}</td>
-                                            <td>{{call.date}}</td>
-                                            <td>{{call.time}}</td>
-                                            <td>{{call.tipo}}</td>
-                                            <td>{{call.status}}</td>
-                                            <td><i class="delete fa fa-trash fa-2x"
-                                                    (click)='deleteHistoryCalls(call.id);getHistoryCalls()'></i></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+   
 </div>
 <audio #audio_remote id="audio_remote" autoplay="autoplay"></audio>
 <audio id="ringtone" loop src="../../../assets/js/sounds/ringing.mp3"></audio>

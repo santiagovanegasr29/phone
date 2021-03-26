@@ -13,7 +13,7 @@
     "electron-build": "ng build --prod && electron .",
     "start-electron": "ng build --base-href ./ && electron .",
     "pack": "build --dir",
-    "dist2": "build"
+    "dist2": "electron-builder"
   },
   "private": true,
   "dependencies": {
@@ -42,6 +42,7 @@
     "ngx-spinner": "^10.0.1",
     "popper.js": "^1.16.1",
     "rxjs": "^6.5.5",
+    "save": "^2.4.0",
     "tslib": "^2.0.0",
     "zone.js": "~0.10.3"
   },
@@ -67,6 +68,12 @@
     "win": {
       "target": "NSIS",
       "icon": "build/Phone.ico"
+    },
+    "linux": {
+      "target": [
+        "AppImage",
+        "deb"
+      ]
     }
   },
   "devDependencies": {

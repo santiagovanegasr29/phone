@@ -95,7 +95,12 @@
     width: 80px;
 }
 
-
+.formCreateUser{
+  width:100px;
+}
+.createUser{
+ margin-left: 150px;
+}
 .text-left {
     margin: 40px;
     margin-left: 90px;
@@ -107,18 +112,19 @@
     box-sizing: border-box;
 }
 
+
 .delete {
     cursor: pointer;
     color: red;
     border: transparent;
-    font-size: 50px;
-    margin-left: 50px;
+    font-size: 20px;
+    margin-left: 10px;
 }
 
 .delete:hover {
     cursor: pointer;
     color: rgb(0, 0, 0);
-    font-size: 60px;
+    font-size: 30px;
 }
 
 .call {
@@ -330,8 +336,8 @@ img {
     width: 50px;
 }
 
-.msg_history {
-   
+.modalClose {
+    border: transparent;   
     
 }
 
@@ -617,7 +623,7 @@ width: 150px;
     margin-top: 200px;
 }
 .name{
-    margin-left: 90px;
+   float: left;
 }
 
 html {
