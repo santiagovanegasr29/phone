@@ -11,10 +11,10 @@ declare let SIPml;
 declare let Dexie;
 declare let $;
 // database
-const db = new Dexie("contact");
+const db = new Dexie('contact');
 db.version(1).stores({
-  contacts: "++id,name,numberPhone",
-  missedcall: "++id,name,call,date,time,img,status,tipo,callTime",
+  contacts: '++id,name,numberPhone',
+  missedcall: '++id,name,call,date,time,img,status,tipo,callTime',
 });
 
 @Component({
@@ -485,10 +485,10 @@ export class ViewsComponent implements OnInit {
 
     if (e.type === 'sent_request') {
       this.loading = false;
-      this.statusCalls = "Answer";
+      this.statusCalls = 'Answer';
       const prueba = document.querySelector('.avatar');
     
-      prueba.classList.remove("avatar");
+      prueba.classList.remove('avatar');
     }
 
     if (e.type == "i_ao_request") {
@@ -971,7 +971,6 @@ console.log(this.idRemove);
   }
 
   tranferCall() {
-   
     this.transferBnt = !this.transferBnt;
   }
   showPassword() {
@@ -996,7 +995,6 @@ console.log(this.idRemove);
   formContactDelete(){
     console.log(this.formDelete.nativeElement.reset());
   }
-
 
   setIdRemove(id){
     this.idRemove = id;
