@@ -38,8 +38,8 @@
         </div>
     </div>
 
-    <div  *ngIf="logout" class="layout-wrapper d-lg-flex">
-         <!-- start chat-leftsidebar -->
+    <div *ngIf="logout" class="layout-wrapper d-lg-flex">
+        <!-- start chat-leftsidebar -->
         <div class="chat-leftsidebar me-lg-1 ms-lg-0">
             <div class="tab-content">
 
@@ -80,43 +80,47 @@
                                         </div>
                                         <div class="modal-body p-4">
 
-                                            <form 
-                                                (ngSubmit)="postContacts();getContacts()"
+                                            <form #formDelete (ngSubmit)="postContacts();getContacts()"
                                                 ngNativeValidate>
-                                               
+
                                                 <label class="label">User : </label>
-                                                <input id="name" name="name" 
-                                                    [(ngModel)]="formContact.name" required placeholder="Name User">
+                                                <input id="name" name="name" [(ngModel)]="formContact.name" required
+                                                    placeholder="Name User">
                                                 <br>
                                                 <br>
-                                                
+
                                                 <label class="label">Number Phone : </label>
                                                 <input id="numberPhone" name="numberPhone" type="number"
-                                                     [(ngModel)]="formContact.numberPhone" required
+                                                    [(ngModel)]="formContact.numberPhone" required
                                                     placeholder="Number Phone">
                                                 <br>
                                                 <br>
                                                 <br>
                                                 <div class="modal-footer">
-                                                <button type="submit" class="createUser btn btn-primary" >save</button>
-                                                <button type="button" class="btn btn-link"
-                                                data-bs-dismiss="modal">Close</button>
-                                                <br>
+                                                    <button type="submit" class="createUser btn btn-primary"
+                                                        data-close>save</button>
+                                                    <button type="button" (click)="formContactDelete()"
+                                                        class="btn btn-link" data-bs-dismiss="modal">Close</button>
+                                                    <br>
                                                 </div>
                                             </form>
-                                         
+
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <!-- End Add contact Modal -->
 
+
+
+
                             <div class="search-box chat-search-box">
                                 <div class="input-group mb-4 rounded-3">
                                     <span class="input-group-text text-muted bg-light pe-1 ps-3" id="basic-addon1">
                                         <i class="ri-search-line search-icon font-size-18"></i>
                                     </span>
-                                    <input type="text" name="filterSearch" [(ngModel)]="filterSearch" class="form-control bg-light" placeholder="Search contacts..."
+                                    <input type="text" name="filterSearch" [(ngModel)]="filterSearch"
+                                        class="form-control bg-light" placeholder="Search contacts..."
                                         aria-label="Search messages or users" aria-describedby="basic-addon1">
                                 </div>
                             </div> <!-- Search Box-->
@@ -125,33 +129,68 @@
                         <!-- Start contact lists -->
                         <div class="p-4 contact-list" data-simplebar>
 
-                            <ul class="list-unstyled contact-list"  *ngFor="let contact of conta.reverse()|searchs:filterSearch">
+                            <ul class="list-unstyled contact-list"
+                                *ngFor="let contact of conta.reverse()|searchs:filterSearch">
                                 <li>
                                     <div class="d-flex align-items-center">
                                         <div class="flex-1">
                                             <h5 class="font-size-14 m-0">{{contact.name}}</h5>
                                             <span class="font-size-14 m-0">{{contact.numberP}}</span>
                                         </div>
-                                    <div class="dropdown" ngbDropdown container="body">
-                                            <button class="btn btn-outline-primary btn-sm" ngbDropdownToggle><i class="ri-more-2-fill"></i></button>
+                                        <div class="dropdown" ngbDropdown container="body">
+                                            <button class="btnDropdown btn btn-outline-primary btn-sm" ngbDropdownToggle><i
+                                                    class="ri-more-2-fill"></i></button>
                                             <div ngbDropdownMenu>
-                                              <button ngbDropdownItem (click)='editUser(contentEditUser)'>Edit   <i class="fa fa-edit"></i></button>
-                                              <button ngbDropdownItem (click)='deleteContact(contact)'>Delete   <i class="fa fa-trash"></i></button>
-                                              <button ngbDropdownItem id="sipCall2"
-                                              (click)="contactCall(contact);spinner()">Call <i class="fa fa-phone"></i></button>
-                                              
+                                                <button ngbDropdownItem (click)='editUser(contentEditUser)'>Edit <i
+                                                        class="fa fa-edit"></i></button>
+                                                <button ngbDropdownItem type="button" class="btnDropdown btn nav-btn"
+                                                    data-bs-toggle="modal" data-bs-target="#deleteContact">Delete <i
+                                                        class="fa fa-trash"></i></button>
+                                                <button class="btnDropdown" ngbDropdownItem id="sipCall2"
+                                                    (click)="contactCall(contact);spinner()">Call <i
+                                                        class="fa fa-phone"></i></button>
+
                                             </div>
-                                          </div>
+                                        </div>
 
                                     </div>
-                                
+
                                 </li>
+                                <!-- Start Remove Contact Modal -->
+                                <div class="modal fade" id="deleteContact" tabindex="-1" role="dialog"
+                                    aria-labelledby="deleteContact-exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title font-size-16"
+                                                    id="deleteContact-exampleModalLabel">Are you sure you want to delete
+                                                    the contact </h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Close">
+                                                </button>
+                                            </div>
+                                            <div class="modal-body p-4">
+
+                                                <div class="modal-footer">
+                                                    <button type="submit" (click)="deleteContact(contact)"
+                                                        class="createUser btn btn-primary"
+                                                        data-bs-dismiss="modal">Yes</button>
+                                                    <button type="button" (click)="formContactDelete()"
+                                                        class="btn btn-link" data-bs-dismiss="modal">Cancel</button>
+                                                    <br>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- End remove contact  Modal -->
+
                                 <ng-template #contentEditUser let-modal>
                                     <div class="modal-header">
                                         <h4 class="modal-title" id="modal-basic-title">Enter Your Information
                                         </h4>
-                                        <button type="button" class="modalClose"
-                                            (click)="modal.dismiss('Cross click')">
+                                        <button type="button" class="modalClose" (click)="modal.dismiss('Cross click')">
                                             <span aria-hidden="true">&times;</span>
                                         </button>
                                     </div>
@@ -161,17 +200,17 @@
                                             (ngSubmit)="updateContact(contact.id,contact.name,contact.numberP);getContacts();modal.dismiss('Cross click')"
                                             ngNativeValidate>
                                             <label class="label">User : </label>
-                                            <input id="name" name="name" 
-                                                [(ngModel)]="contact.name" required>
+                                            <input id="name" name="name" [(ngModel)]="contact.name" required>
                                             <br>
                                             <label class="label">Number Phone : </label>
                                             <input id="numberPhone" name="numberPhone" type="number"
-                                               [(ngModel)]="contact.numberP" required>
+                                                [(ngModel)]="contact.numberP" required>
                                             <br>
                                             <div class="modal-footer">
-                                            <button type="submit" class="btn btn-primary">Edit User</button>
-                                            <button  (click)="modal.dismiss('Cross click')" class="btn btn-link">close</button>
-                                        </div>
+                                                <button type="submit" class="btn btn-primary">Edit User</button>
+                                                <button (click)="modal.dismiss('Cross click')"
+                                                    class="btn btn-link">close</button>
+                                            </div>
                                         </form>
                                     </div>
                                 </ng-template>
@@ -193,7 +232,8 @@
         <!-- end chat-leftsidebar -->
         <!-- Start User chat -->
         <div class="user-chat w-100 overflow-hidden">
-            <div class="msg_history llamada md-8" *ngIf="calling">
+
+            <div class="msg_history md-6" *ngIf="calling">
                 <!--*ngIf="calling"-->
                 <div class="col-md-6">
                     <div class="inside">
@@ -204,49 +244,91 @@
                                 <br>
                                 <label class="callname">{{callName}} </label>
                                 <br>
-                                <input class="entrante" type="text" value="{{incomingcall}} " name=""
-                                    id="entrante" disabled>
-
+                                <input  style="margin-left: 30px;" class="entrante" type="text" value="{{incomingcall}} " name="" id="entrante"
+                                    disabled>
                                 <label class="callTime">{{this.secondsToString(this.callTime)}}</label>
                                 <br>
-                                <div class="card" *ngIf="transferBnt">
-                                    <input #numberTransfer placeholder="number transfer" class="btnTransfer"
-                                        type="text">
+                                <!--    <div class="card" *ngIf="transferBnt">
+                                    <input #numberTransfer placeholder="number transfer"
+                                        class="btnTransfer btn btn-outline-dark" type="text">
                                     <input type="submit" value="Transfer" (click)="sipTransfer()">
-                                </div>
-                                <button class="copyNumber btn-dark btn-outline-warning fa fa-copy"
-                                    (click)="copy()"> Copy
+                                </div> -->
+                                <button class="copyNumber btn-dark btn-outline-warning fa fa-copy" (click)="copy()">
+                                    Copy
                                     Number</button>
                             </div>
                             <br>
                             <div class="options">
-                                <button class="microphone btn option"><i
-                                        [@muteAnimation]="numberShow ? 'open' : 'close'"
-                                        class="fa fa-microphone" id="microphone"
-                                        (click)="sipToggleMute();showNumbers();"></i></button>
+                                <button type="button" (click)="sipToggleMute();showNumbers();"
+                                    class="btnOptions btn btn-success avatar-sm rounded-circle" data-bs-dismiss="modal">
+                                    <span class="avatar-title bg-transparent font-size-20">
+                                        <i id="microphone" [@muteAnimation]="numberShow ? 'open' : 'close'"
+                                            class="microphone ri-mic-2-line"></i>
+                                    </span>
+                                </button>
+                                <button type="button" (click)="sipCall('call-audio')"
+                                    class="btnOptions btn btn-success avatar-sm rounded-circle" data-bs-dismiss="modal">
+                                    <span class="avatar-title bg-transparent font-size-20">
+                                        <i class="call ri-phone-fill"></i>
+                                    </span>
+                                </button>
+                                <button type="button" (click)="sipHangUp()"
+                                    class="btnOptions btn btn-success avatar-sm rounded-circle" data-bs-dismiss="modal">
+                                    <span class="avatar-title bg-transparent font-size-20">
+                                        <i class="hangUpCall ri-phone-fill"></i>
+                                    </span>
+                                </button>
 
-                                <i class="number fa fa-phone md-30" (click)="sipCall('call-audio')"></i>
-                                <i class="hangUpCall  fa fa-phone md-30" (click)="sipHangUp()"></i>
-                                <input type="button" class="btn btn-success" id="btnTransfer" value="Transfer"
-                                    (click)="tranferCall()" />
-                                <button *ngIf="slash" class="bell btn option"><i class="fa fa-bell-slash"
-                                        (click)="callSound();callSlash();"></i></button>
+                                <button data-bs-target="#tranfer" class="btnOptions btn btn-success avatar-sm rounded-circle"
+                                    data-bs-toggle="modal" data-bs-dismiss="modal">
+                                    <span class="avatar-title bg-transparent font-size-20">
+                                        <i class="btnTransfer ri-exchange-fill"></i>
+                                    </span>
+                                </button>
+
+                                <button *ngIf="slash" type="button" (click)="callSound();callSlash();"
+                                    class="btnOptions btn btn-success avatar-sm rounded-circle" data-bs-dismiss="modal">
+                                    <span class="avatar-title bg-transparent font-size-20">
+                                        <i class="bell ri-volume-mute-fill"></i>
+                                    </span>
+                                </button>
                             </div>
                         </div>
                     </div>
                 </div>
+                <!-- Start transfer Modal -->
+                <div class="modal fade" id="tranfer" tabindex="-1" role="dialog"
+                    aria-labelledby="tranfer-exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title font-size-16" id="tranfer-exampleModalLabel">please enter the
+                                    number of the extension to transfer</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                                </button>
+                            </div>
+                            <div class="modal-body p-4">
+                                <div class="modal-footer">
+                                    <input name="numberPhone" type="number" required #numberTransfer
+                                        placeholder="Number Transfer">
+                                    <br>
+                                    <input type="submit" value="Transfer" data-bs-dismiss="modal"
+                                        (click)="sipTransfer()">
+                                    <br>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- End tranfer  Modal -->
             </div>
             <div class="d-lg-flex">
-                <ngx-spinner
-                bdColor="rgba(51,51,51,0.8)"
-                size="medium"
-                color="#fff"
-                type="ball-scale-multiple"
-              >
-                <p style="font-size: 30px; color: white">Loading...</p>
-              </ngx-spinner>       
+                <ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-scale-multiple">
+                    <p style="font-size: 30px; color: white">Loading...</p>
+                </ngx-spinner>
                 <!-- start chat conversation section -->
-               <div  *ngIf="text" class="w-100 overflow-hidden position-relative">
+                <div *ngIf="text" class="w-100 overflow-hidden position-relative">
                     <div class="p-3 p-lg-4 border-bottom">
                         <div class="row align-items-center">
                             <div class="col-sm-4 col-8">
@@ -255,26 +337,27 @@
                                 <p class="titleContact fas fa-history" center>Recent</p>
                                 <ul class="list-inline user-chat-nav text-end mb-0">
                                     <li class="list-inline-item">
-                                       
+
                                         <div class="dropdown" ngbDropdown container="body">
-                                            <button class="btn btn-outline-primary btn-sm" ngbDropdownToggle><i class="ri-more-2-fill"></i></button>
+                                            <button class="btnDropdown btn btn-outline-primary btn-sm" ngbDropdownToggle><i
+                                                    class="ri-more-2-fill"></i></button>
                                             <div ngbDropdownMenu>
-                                              <button ngbDropdownItem (click)='sipUnRegister()'>Log out   <i class="delete fas fa-sign-out-alt"></i>
-                                                </button>                                              
+                                                <button ngbDropdownItem (click)='sipUnRegister()'>Log out <i
+                                                        class="delete fas fa-sign-out-alt"></i>
+                                                </button>
                                             </div>
-                                          </div>
+                                        </div>
                                     </li>
                                 </ul>
                             </div>
                         </div>
                     </div>
                     <!-- end chat user head -->
-                       <input type="text" name="filterSearchHistory" [(ngModel)]="filterSearchHistory"
-                                    class="form-control product-search" id="input-search" placeholder="Search...">
+                    <input type="text" name="filterSearchHistory" [(ngModel)]="filterSearchHistory"
+                        class="form-control product-search" id="input-search" placeholder="Search...">
                     <!-- start chat conversation -->
                     <div class="chat-conversation p-3 p-lg-4" data-simplebar="init">
-
-                        <table  class="table table-hover">
+                        <table class="table table-hover">
                             <thead>
                                 <tr>
                                     <th scope="col">Number</th>
@@ -287,7 +370,7 @@
                                     <th scope="col">Delete</th>
                                 </tr>
                             </thead>
-                            <tbody *ngFor="let call of calls.reverse()|searchs:filterSearchHistory;">
+                            <tbody *ngFor="let call of calls.reverse()|searchs:filterSearchHistory">
                                 <tr>
                                     <td>{{call.call}}</td>
                                     <td>{{call.name}}</td>
@@ -296,11 +379,13 @@
                                     <td>{{call.time}}</td>
                                     <td>{{call.tipo}}</td>
                                     <td>{{call.status}}</td>
-                                    <td><i class="delete fa fa-trash fa-2x"
-                                            (click)='deleteHistoryCalls(call.id);getHistoryCalls()'></i></td>
+                                    <td><button (click)="setIdRemove(call.id)"  ngbDropdownItem type="button" class="btn nav-btn" data-bs-toggle="modal"
+                                            data-bs-target="#deleteHistoryCalls"><i
+                                                class="delete fa fa-trash"></i></button></td>
                                 </tr>
+                                
                             </tbody>
-                            
+
                         </table>
 
                     </div>
@@ -316,6 +401,36 @@
         </div>
         <!-- End User chat -->
 
+        <!-- Start Remove HistoryCall Modal -->
+        <div class="modal fade" id="deleteHistoryCalls" tabindex="-1" role="dialog"
+        aria-labelledby="deleteHistoryCalls-exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title font-size-16"
+                        id="deleteHistoryCalls-exampleModalLabel">Are you sure you want to
+                        delete the call</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                        aria-label="Close">     
+                    </button>
+                </div>
+                <div  class="modal-body p-4">
+                    <div class="modal-footer" >
+                        <button type="submit"
+                            (click)='deleteHistoryCalls()'
+                            class="createUser btn btn-primary"
+                            data-bs-dismiss="modal">Yes</button>
+                        <button type="button" (click)="formContactDelete()"
+                            class="btn btn-link" data-bs-dismiss="modal">Cancel</button>
+                        <br>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End remove HystoryCall  Modal -->
+
         <!-- audiocall Modal -->
         <div class="modal fade" id="audiocallModal" tabindex="-1" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" style="max-width: 420px;">
@@ -329,40 +444,46 @@
                                 <div class="text-center">
 
                                     <div>
-                                        <button class="btn btn-success avatar-sm rounded-circle m-1" (click)="pressNum('1')">1</button>
-                                        <button class="btn btn-success avatar-sm rounded-circle m-1" (click)="pressNum('2')">2</button>
-                                        <button class="btn btn-success avatar-sm rounded-circle m-1" (click)="pressNum('3')">3</button>
+                                        <button class="btn btn-success avatar-sm rounded-circle m-1"
+                                            (click)="pressNum('1')">1</button>
+                                        <button class="btn btn-success avatar-sm rounded-circle m-1"
+                                            (click)="pressNum('2')">2</button>
+                                        <button class="btn btn-success avatar-sm rounded-circle m-1"
+                                            (click)="pressNum('3')">3</button>
                                     </div>
 
                                     <div>
-                                        <button class="btn btn-success avatar-sm rounded-circle m-1" (click)="pressNum('4')">4</button>
-                                        <button class="btn btn-success avatar-sm rounded-circle m-1" (click)="pressNum('5')">5</button>
-                                        <button class="btn btn-success avatar-sm rounded-circle m-1" (click)="pressNum('6')">6</button>
+                                        <button class="btn btn-success avatar-sm rounded-circle m-1"
+                                            (click)="pressNum('4')">4</button>
+                                        <button class="btn btn-success avatar-sm rounded-circle m-1"
+                                            (click)="pressNum('5')">5</button>
+                                        <button class="btn btn-success avatar-sm rounded-circle m-1"
+                                            (click)="pressNum('6')">6</button>
                                     </div>
 
                                     <div>
-                                        <button class="btn btn-success avatar-sm rounded-circle m-1" (click)="pressNum('7')">7</button>
-                                        <button class="btn btn-success avatar-sm rounded-circle m-1" (click)="pressNum('8')">8</button>
-                                        <button class="btn btn-success avatar-sm rounded-circle m-1" (click)="pressNum('9')" >9</button>
+                                        <button class="btn btn-success avatar-sm rounded-circle m-1"
+                                            (click)="pressNum('7')">7</button>
+                                        <button class="btn btn-success avatar-sm rounded-circle m-1"
+                                            (click)="pressNum('8')">8</button>
+                                        <button class="btn btn-success avatar-sm rounded-circle m-1"
+                                            (click)="pressNum('9')">9</button>
                                     </div>
 
                                     <div>
-                                        <button class="btn btn-success avatar-sm rounded-circle m-1" (click)="pressNum('*')" >*</button>
-                                        <button class="btn btn-success avatar-sm rounded-circle m-1" (click)="pressNum('0')" >0</button>
-                                        <button class="btn btn-success avatar-sm rounded-circle m-1" (click)="pressNum('#')" >#</button>
-                                        
+                                        <button class="btn btn-success avatar-sm rounded-circle m-1"
+                                            (click)="pressNum('*')">*</button>
+                                        <button class="btn btn-success avatar-sm rounded-circle m-1"
+                                            (click)="pressNum('0')">0</button>
+                                        <button class="btn btn-success avatar-sm rounded-circle m-1"
+                                            (click)="pressNum('#')">#</button>
                                     </div>
-
-
 
                                 </div>
-                                    <input for="number" name="number"  style="width: 300px;" type="text" class="form-control mt-4 m-auto"
-                                    required placeholder="Enter Number" [(ngModel)]="numberPhone.phone">
-                                    
-
+                                <input for="number" name="number" style="width: 300px;" type="text"
+                                    class="form-control mt-4 m-auto" required placeholder="Enter Number"
+                                    [(ngModel)]="numberPhone.phone">
                             </form>
-
-
                             <div class="mt-4">
                                 <ul class="list-inline mb-1">
                                     <li class="list-inline-item px-2 me-2 ms-0">
@@ -374,8 +495,9 @@
                                         </button>
                                     </li>
                                     <li class="list-inline-item px-2">
-                                        <button type="button"  (click)="loadingCall();sipCall('call-audio');spinner()" class="btn btn-success avatar-sm rounded-circle" data-bs-dismiss="modal">
-                                            <span class="avatar-title bg-transparent font-size-20" >
+                                        <button type="button" (click)="loadingCall();sipCall('call-audio');spinner()"
+                                            class="btn btn-success avatar-sm rounded-circle" data-bs-dismiss="modal">
+                                            <span class="avatar-title bg-transparent font-size-20">
                                                 <i class="ri-phone-fill"></i>
                                             </span>
                                         </button>
@@ -388,12 +510,11 @@
             </div>
         </div>
         <!-- audiocall Modal -->
-
-
     </div>
     <!-- end  layout wrapper -->
-   
 </div>
 <audio #audio_remote id="audio_remote" autoplay="autoplay"></audio>
-<audio id="ringtone" loop src="../../../assets/js/sounds/ringing.mp3"></audio>
-<audio id="ringbacktone" loop src="../../../assets/js/sounds/calling.mp3"> </audio>
+<!-- <audio id="ringtone" loop src="../../../assets/js/sounds/ringing.mp3"></audio>
+<audio id="ringbacktone" loop src="../../../assets/js/sounds/calling.mp3"> </audio> -->
+<audio id="ringtone" loop src="assets/js/sounds/ringing.mp3"></audio>
+<audio id="ringbacktone" loop src="assets/js/sounds/calling.mp3"></audio>

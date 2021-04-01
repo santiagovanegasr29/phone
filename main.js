@@ -1,4 +1,5 @@
-const { app, BrowserWindow, Menu } = require('electron');
+
+const { app, BrowserWindow , Menu} = require('electron');
 const url = require('url');
 const path = require('path');
 
@@ -7,6 +8,8 @@ let mainWindow
 
 function newWindow() {
     mainWindow = new BrowserWindow({
+        width: 1400,
+        height: 1900,
         title: 'newWindow',
         webPreferences: {
             nodeIntegration: true
@@ -21,25 +24,24 @@ function newWindow() {
 
     }));
 
-    mainWindow.webContents.openDevTools()
+  /*   mainWindow.webContents.openDevTools() */
     mainWindow.on('close', function() {
         mainWindow = null
     })
 
 
 }
+  
+    app.on('ready', newWindow)
+   /*  app.on('window-all-closed', function() {
+        if (process.platform !== 'darwin') app.quit()
+    }) */
 
-app.on('ready', newWindow)
+    app.on('activate', function() {
+        if (mainWindow === null) createWindow()
+    })
 
-app.on('window-all-closed', function() {
-    if (process.platform !== 'darwin') app.quit()
-})
-
-app.on('activate', function() {
-    if (mainWindow === null) createWindow()
-})
-
-const templateMenu = [{
+const templateMenu = [/* {
     label: 'file',
     submenu: [{
         label: 'sound',
@@ -48,7 +50,7 @@ const templateMenu = [{
 
         }
     }]
-}, {
+} *//* , {
     label: 'audio',
     submenu: [{
         label: 'propieties',
@@ -58,4 +60,6 @@ const templateMenu = [{
         }
 
     }]
-}]
+} */]
+const menu = Menu.buildFromTemplate(templateMenu)
+Menu.setApplicationMenu(menu)

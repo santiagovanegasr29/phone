@@ -5,13 +5,13 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Contact } from 'src/app/entities/contacts';
 import { Observable, timer } from 'rxjs';
 import { trigger, state, style, animate, transition } from '@angular/animations';
-import{ NgxSpinnerService} from 'ngx-spinner';
+import { NgxSpinnerService} from 'ngx-spinner';
 
 declare let SIPml;
 declare let Dexie;
 declare let $;
 // database
-var db = new Dexie("contact");
+const db = new Dexie("contact");
 db.version(1).stores({
   contacts: "++id,name,numberPhone",
   missedcall: "++id,name,call,date,time,img,status,tipo,callTime",
@@ -58,10 +58,11 @@ db.version(1).stores({
 
     trigger('muteAnimation', [
       state('open', style({
-        color: "green",
+        color: 'black',
       })),
       state('close', style({
-        color: "red",
+        color: 'red',
+
       })),
       transition('open => closed', [
         animate('1s')
@@ -92,14 +93,15 @@ export class ViewsComponent implements OnInit {
   @ViewChild('audio_remote') audio_remote: ElementRef;
   @ViewChild('inputPassword')inputPassword: ElementRef;
   @ViewChild('mute')mute: ElementRef;
-  inputCall;  
+  @ViewChild('formDelete')formDelete: ElementRef;
+  inputCall;
   audioRemote;
   formContact: Contact;
   formContactEdit: Contact;
   closeResult = '';
   allContacts;
   callAll;
-  imgCalls  = "prueba";
+  imgCalls  = 'prueba';
   numberShow = true;
   public conta: any = [];
   public calls: any = [];
@@ -151,16 +153,17 @@ export class ViewsComponent implements OnInit {
   filterSearchHistory='';
   missCall;
   AnswerCall;
-  optionSelect:string ='0';
-  viewSelection:string = '';
+  optionSelect: string ='0';
+  viewSelection: string = '';
+  idRemove: any;
 
-
-  constructor(public modalService: NgbModal, private removeClass: ElementRef, private spinnerService:NgxSpinnerService) {
+  constructor(public modalService: NgbModal, private removeClass: ElementRef, private spinnerService: NgxSpinnerService) {
     this.dataform = new Login();
     this.numberPhone = new PhoneNumber();
     this.formContact = new Contact();
     this.conta = [];
     this.calls = [];
+    this.idRemove = '';
 
   }
 
@@ -183,18 +186,20 @@ export class ViewsComponent implements OnInit {
       });
     });
 
-    
+
   }
+  // tslint:disable-next-line: typedef
   capture() {
     this.viewSelection = this.optionSelect;
     console.log(this.viewSelection);
-    
+
 }
   spinner(): void{
     this.spinnerService.show();
     //detener this.spinnerService.hide();
   }
 
+  // tslint:disable-next-line: typedef
   open(content) {
     this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
@@ -424,19 +429,17 @@ export class ViewsComponent implements OnInit {
 
           if (this.oSipSessionCall) {
             // do not accept the incoming call if we're already 'in call'
-            
             this.recent = "saliente";
             this.statusCalls = "no Answer";
-           // this.imgCalls = "aqui toy perdida";
             this.callTime = 0;
             e.newSession.hangup(); // comment this line for multi-line support
-
           }
           else {
             this.oSipSessionCall = e.newSession;
             // start listening for events
             this.oSipSessionCall.setConfiguration(this.oConfigCall);
             this.calling = true;
+            this.text=false;
             this.spinnerService.hide();
             this.loading = false;
             this.startRingTone();
@@ -447,7 +450,6 @@ export class ViewsComponent implements OnInit {
             //alert(e.o_event.o_message.o_hdr_From.s_display_name+"  lo esta llamando su numero es = "+sRemoteNumber);
             //this.showNotifICall(sRemoteNumber);
             this.recent = "entrante";
-
           }
           break;
         }
@@ -618,14 +620,14 @@ export class ViewsComponent implements OnInit {
         {
           if (e.session == this.oSipSessionCall) {
             var iSipResponseCode = e.getSipResponseCode();
-            if (iSipResponseCode == 180 || iSipResponseCode == 183) {
+            if (iSipResponseCode === 180 || iSipResponseCode === 183) {
               this.calling = true;
               this.spinnerService.hide();
               this.text = false;
               this.loading = false;
               this.startRingbackTone();
               console.log('ringing...');
-              this.recent = "saliente";
+              this.recent = 'saliente';
               this.time.unsubscribe();
 
             }
@@ -661,7 +663,7 @@ export class ViewsComponent implements OnInit {
         }
       case 'm_local_hold_nok':
         {
-          if (e.session == this.oSipSessionCall) {
+          if (e.session === this.oSipSessionCall) {
             this.oSipSessionCall.bTransfering = false;
             //btnHoldResume.value = 'Hold';
             //btnHoldResume.disabled = false;
@@ -671,7 +673,7 @@ export class ViewsComponent implements OnInit {
         }
       case 'm_local_resume_ok':
         {
-          if (e.session == this.oSipSessionCall) {
+          if (e.session === this.oSipSessionCall) {
             this.oSipSessionCall.bTransfering = false;
             //btnHoldResume.value = 'Hold';
             //btnHoldResume.disabled = false;
@@ -686,7 +688,7 @@ export class ViewsComponent implements OnInit {
         }
       case 'm_local_resume_nok':
         {
-          if (e.session == this.oSipSessionCall) {
+          if (e.session === this.oSipSessionCall) {
             this.oSipSessionCall.bTransfering = false;
             //btnHoldResume.disabled = false;
             console.log('<i>Failed to unhold call</i>')
@@ -695,21 +697,21 @@ export class ViewsComponent implements OnInit {
         }
       case 'm_remote_hold':
         {
-          if (e.session == this.oSipSessionCall) {
+          if (e.session === this.oSipSessionCall) {
             console.log('<i>Placed on hold by remote party</i>');
           }
           break;
         }
       case 'm_remote_resume':
         {
-          if (e.session == this.oSipSessionCall) {
+          if (e.session === this.oSipSessionCall) {
             console.log('<i>Taken off hold by remote party</i>');
           }
           break;
         }
       case 'm_bfcp_info':
         {
-          if (e.session == this.oSipSessionCall) {
+          if (e.session === this.oSipSessionCall) {
             console.log('BFCP Info: <i>' + e.description + '</i)>');
           }
           break;
@@ -717,14 +719,14 @@ export class ViewsComponent implements OnInit {
 
       case 'o_ect_trying':
         {
-          if (e.session == this.oSipSessionCall) {
+          if (e.session === this.oSipSessionCall) {
             console.log('<i>Call transfer in progress...</i>')
           }
           break;
         }
       case 'o_ect_accepted':
         {
-          if (e.session == this.oSipSessionCall) {
+          if (e.session === this.oSipSessionCall) {
             console.log('<i>Call transfer accepted</i>')
           }
           break;
@@ -732,7 +734,7 @@ export class ViewsComponent implements OnInit {
       case 'o_ect_completed':
       case 'i_ect_completed':
         {
-          if (e.session == this.oSipSessionCall) {
+          if (e.session === this.oSipSessionCall) {
             console.log('<i>Call transfer completed</i>')
             //btnTransfer.disabled = false;
             if (this.oSipSessionTransferCall) {
@@ -745,7 +747,7 @@ export class ViewsComponent implements OnInit {
       case 'o_ect_failed':
       case 'i_ect_failed':
         {
-          if (e.session == this.oSipSessionCall) {
+          if (e.session === this.oSipSessionCall) {
             console.log('<i>Call transfer failed</i>');
             //btnTransfer.disabled = false;
           }
@@ -754,7 +756,7 @@ export class ViewsComponent implements OnInit {
       case 'o_ect_notify':
       case 'i_ect_notify':
         {
-          if (e.session == this.oSipSessionCall) {
+          if (e.session === this.oSipSessionCall) {
             console.log("<i>Call Transfer: <b>" + e.getSipRespo + " " + e.description + "</b></i>");
             if (e.getSipResponseCode() >= 300) {
               if (this.oSipSessionCall.bHeld) {
@@ -767,10 +769,10 @@ export class ViewsComponent implements OnInit {
         }
       case 'i_ect_requested':
         {
-          if (e.session == this.oSipSessionCall) {
-            var s_message = "Do you accept call transfer to [" + e.getTransferDestinationFriendlyName() + "]?";//FIXME
+          if (e.session === this.oSipSessionCall) {
+            var s_message = 'Do you accept call transfer to [' + e.getTransferDestinationFriendlyName() + ']?';//FIXME
             if (confirm(s_message)) {
-              console.log("<i>Call transfer in progress...</i>")
+              console.log('<i>Call transfer in progress...</i>')
               this.oSipSessionCall.acceptTransfer();
               break;
             }
@@ -782,9 +784,9 @@ export class ViewsComponent implements OnInit {
   }
   uiBtnCallSetText = (s_text) => {
     switch (s_text) {
-      case "Call":
+      case 'Call':
         {
-          var bDisableCallBtnOptions = (window.localStorage && window.localStorage.getItem('org.doubango.expert.disable_callbtn_options') == "true");
+          let bDisableCallBtnOptions = (window.localStorage && window.localStorage.getItem('org.doubango.expert.disable_callbtn_options') == "true");
           this.sipCall('call-audio');
           console.log(bDisableCallBtnOptions);
           break;
@@ -809,6 +811,7 @@ export class ViewsComponent implements OnInit {
 
     //}
   }
+  // tslint:disable-next-line: typedef
   pressNum(num: string) {
     if (this.numberPhone.phone === "") {
       this.numberPhone.phone = num;
@@ -817,6 +820,7 @@ export class ViewsComponent implements OnInit {
     }
 
   }
+  // tslint:disable-next-line: typedef
   contactCall(contact) {
     this.numberPhone.phone = '' + contact.numberP;  
     this.callName = contact.name; 
@@ -825,27 +829,26 @@ export class ViewsComponent implements OnInit {
     this.loadingCall();
   }
 
+  // tslint:disable-next-line: typedef
   postHistoryCalls() {
-   
+    // tslint:disable-next-line: max-line-length
     db.missedcall.add({ name: this.callName, call: this.incomingcall, date: new Date().toLocaleDateString(), time: new Date().toLocaleTimeString(), tipo: this.recent, status: this.statusCalls, callTime:  this.secondsToString(this.callTime)}).then(() => {
       return db.missedcall.toArray();
     }).then((missedcall) => {
-      console.log("calls: " + JSON.stringify(missedcall));
+      console.log('calls: ' + JSON.stringify(missedcall));
     
     }).catch((e) => {
-      alert("Error: " + (e.stack || e));
+      alert('Error: ' + (e.stack || e));
     });
   }
+  // tslint:disable-next-line: typedef
   getHistoryCalls() {
     this.callAll = db.missedcall.toArray();
     // alert(db.contacts.get({name: this.dataform.name}));
     this.callAll.then((value) => {
       this.calls = value;
       console.log(this.calls);
-      
       console.log(this.calls[0].status);
-      
-      
 
     });
   }
@@ -856,16 +859,20 @@ export class ViewsComponent implements OnInit {
     db.missedcall.update(id, { callTime: this.callTime });
   }
 
-  deleteHistoryCalls(id) {
+  deleteHistoryCalls() {
+console.log(this.idRemove);
 
-    db.missedcall.delete(id);
+    db.missedcall.delete(this.idRemove);
+    this.getHistoryCalls();
   }
 
   postContacts() {
+   
     db.contacts.add({ name: this.formContact.name, numberP: this.formContact.numberPhone }).then(() => {
       return db.contacts.toArray();
     }).then((contact) => {
       console.log("My contacts: " + JSON.stringify(contact));
+      this.formContactDelete();
     }).catch((e) => {
       alert("Error: " + (e.stack || e));
     });
@@ -928,12 +935,7 @@ export class ViewsComponent implements OnInit {
     this.isOpen = !this.isOpen;
   }
   showNumbers() {
-    if (document.getElementById("microphone").className == "fa fa-microphone" ) {
-      document.getElementById("microphone").className = "fa fa-microphone-slash";
-    }
-    document.getElementById("microphone").className = "fa fa-microphone";
-
-        this.numberShow = !this.numberShow;
+      this.numberShow = !this.numberShow;
   }
 
   loadingCall() {
@@ -991,8 +993,17 @@ export class ViewsComponent implements OnInit {
     this.second = (this.second < 10)? '0' + this.second : this.second;
     return this.hour + ':' + this.minute + ':' + this.second;
   }
+  formContactDelete(){
+    console.log(this.formDelete.nativeElement.reset());
+  }
+
+
+  setIdRemove(id){
+    this.idRemove = id;
+  }
 
 }
+
 
 
 

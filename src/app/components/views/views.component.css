@@ -9,6 +9,25 @@
     animation-duration: 1s;
     animation-fill-mode: forwards;
 }
+.btnTransfer{
+color: black;
+
+}
+.copyNumber{
+    margin-left: 150px;
+}
+.btnDropdown{
+    border:transparent;
+}
+
+.msg_history{
+    width:850px;
+    height:650px;
+    background-color:#04a6e1;
+    border-radius:50px; 
+    margin-left: 50px;
+}
+
 
 .w3-sidebar{
     margin-top:400px;
@@ -18,9 +37,8 @@
     font-size: 20px;
     margin: auto;
 }
-
 .number {
-    color: green;
+    color: blue;
     width: 50px;
     height: 50px;
     border-radius: 50px;
@@ -30,22 +48,10 @@
     cursor: pointer;
 }
 
-
-.hangUpCall {
-    transform: rotate(190deg);
+.hangUpCall {    
     color: red;
-    width: 50px;
-    height: 50px;
-    border-radius: 50px;
-    margin-left: 60px;
-    font-size: 48px;
     cursor: pointer;
-}
 
-.hangUpCall:hover {
-    cursor: pointer;
-    color: black;
-    font-size: 60px;
 }
 
 .boton-inicio {
@@ -129,7 +135,6 @@
 
 .call {
     cursor: pointer;
-    font-size: 50px;
     color: green
 }
 
@@ -390,10 +395,10 @@ img {
     color: rgb(255, 145, 0);
     font-size: 20px;
 }
-
-.btn {
-  border: .5px solid transparent;
+.btnOptions{
+    margin: 15px;
 }
+
 .con{
 
     font-size: 40px;
@@ -439,7 +444,7 @@ img {
 }
 
 .callTime {
-    margin-left: 260px;
+    margin-left: 180px;
 }
 
 .media div {
@@ -556,43 +561,18 @@ img {
     background-image: linear-gradient(to top, #00ac00 0%, #01761e 100%);
 }
 
-.llamada {
-    background-color: #69b2e2;
-    border-radius: 30px;
-}
-
-.microphone {
-    font-size: 45px;
-}
-
-.microphone:hover {
-    color: black;
-    cursor: pointer;
-}
-
-.entrante {
-    margin-left: 260px;
-    border: none;
-    display: flex;
-    background: #69b2e2;
-}
-
-.copyNumber {
-    margin: auto;
-    border: none;
-    display: flex;
-}
-
 .options {
-    display: flex;
+    display: block;
     border-radius: 220px;
-
-    background-clip: padding-box;
+    background-color: #003649;
+ 
 }
-
+.dropdown{
+    border:transparent;
+}
 .bell {
-    font-size: 30px;
-    color: rgb(255, 145, 0);
+ 
+    color: black;
 }
 
 .bell:hover {
@@ -614,10 +594,7 @@ img {
     vertical-align: auto;
 }
 
-.btnTransfer{
-display: block;
-width: 150px;
-}
+
 .phoneImg{
     display: flex;
     margin-top: 200px;
